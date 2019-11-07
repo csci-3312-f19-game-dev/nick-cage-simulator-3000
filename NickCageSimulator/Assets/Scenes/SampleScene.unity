@@ -151,6 +151,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hexPrefab: {fileID: 1567385290409216628, guid: 182c37514d6c2c74ea8667f9018e5d14,
     type: 3}
+  purchasePrefab: {fileID: 6855245160175205820, guid: 6f277736c84aeb141b3e44509d274be7,
+    type: 3}
 --- !u!4 &418465697
 Transform:
   m_ObjectHideFlags: 0

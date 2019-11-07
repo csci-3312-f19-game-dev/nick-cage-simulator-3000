@@ -16,6 +16,13 @@ public class PlayerManager : MonoBehaviour
     public TileHandler currTile;
     public bool isTileClicked = false;
 
+    //Resources
+    private int wood = 5;
+    private int stone = 5;
+    private int food = 5;
+
+    /* Unity-specific functions */
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,5 +33,26 @@ public class PlayerManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    /* Our functions */
+    public void purchaseUnit()
+    {
+        if (food < 5) Debug.Log("You don't have enough food to purchase a new unit");
+        else
+        {
+            Debug.Log("New unit added");
+            food -= 5;
+            prevTile.addUnit();
+        }
+    }
+
+    public void assignPrevTile(TileHandler tile) { prevTile = tile;  }
+    public void assignCurrTile(TileHandler tile) { currTile = tile; }
+    public void resetPM()
+    {
+        assignCurrTile(null);
+        assignPrevTile(null);
+        isTileClicked = false;
     }
 }

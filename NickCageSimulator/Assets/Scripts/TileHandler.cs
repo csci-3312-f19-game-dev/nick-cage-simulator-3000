@@ -10,14 +10,21 @@ public class TileHandler : MonoBehaviour
     //REMOVE PLAYER MANAGER FROM CLASS ONCE YOU ARE DONE
 
     private SpriteRenderer sr;
-    private int unitCount = 5; //Arbitrary choice of 5 for testing
+    private int unitCount = 0; //Each tile starts out with no units
+    private bool isCityOfGold;
 
     /* Unity-specific functions */
+
+    private void Awake()
+    {
+        sr = GetComponent<SpriteRenderer>();
+        isCityOfGold = false;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        sr = GetComponent<SpriteRenderer>();
+       
     }
 
     // Update is called once per frame
@@ -32,21 +39,47 @@ public class TileHandler : MonoBehaviour
         {
             if (PlayerManager.PM.isTileClicked)
             {
-                PlayerManager.PM.isTileClicked = false;
-                PlayerManager.PM.currTile = this;
-                PlayerManager.PM.prevTile.unitCount -= 1;
-                PlayerManager.PM.currTile.unitCount += 1;
-                //Setting to null after each pair of tile clicks - hackish but works for now
-                PlayerManager.PM.prevTile = null;
-                PlayerManager.PM.currTile = null;
+                PlayerManager.PM.assignCurrTile(this);
+                moveUnit(); 
+                
+                if (PlayerManager.PM.currTile.isCityOfGold)
+                {
+                    Debug.Log("Congrats, you have found the city of gold!");
+                    displayCityOfGold();
+                    if (unitCount == 10) Debug.Log("Congrats, you have successfully excavated the city of gold!");
+                    //in future prototypes, this might be where we handle win requirements logic
+                }
+
+                PlayerManager.PM.resetPM();
+                
             } else
             {
                 PlayerManager.PM.isTileClicked = true;
-                PlayerManager.PM.prevTile = this;
+                PlayerManager.PM.assignPrevTile(this);
             }
-
-            sr.color = new Color(1, 0, 0, 1);
         }
     }
     
+    /* Our functions */
+    public void setAsCityOfGold()
+    {
+        isCityOfGold = true;
+    }
+    void displayCityOfGold()
+    {
+        sr.color = new Vector4(1, 2, 0, 1);
+    }
+
+    public void addUnit()
+    {
+        unitCount += 1; 
+    }
+
+    private void moveUnit()
+    {
+        PlayerManager.PM.prevTile.unitCount -= 1;
+        PlayerManager.PM.currTile.unitCount += 1;
+        Debug.Log("unit removed from " + PlayerManager.PM.prevTile.name + ", " + PlayerManager.PM.prevTile.unitCount + " total units");
+        Debug.Log("unit added to " + PlayerManager.PM.currTile.name + ", " + PlayerManager.PM.currTile.unitCount + " total units");
+    }
 }

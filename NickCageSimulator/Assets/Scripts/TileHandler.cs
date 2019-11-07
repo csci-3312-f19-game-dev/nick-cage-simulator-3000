@@ -78,6 +78,7 @@ public class TileHandler : MonoBehaviour
 
     private void moveUnit()
     {
+        PlayerManager.PM.food++;
         PlayerManager.PM.prevTile.unitCount -= 1;
         PlayerManager.PM.currTile.unitCount += 1;
         Debug.Log("unit removed from " + PlayerManager.PM.prevTile.name + ", " + PlayerManager.PM.prevTile.unitCount + " total units");

@@ -17,8 +17,8 @@ public class PlayerManager : MonoBehaviour
     public bool isTileClicked = false;
 
     //Resources
-    private int wood = 5;
-    private int stone = 5;
+    //private int wood = 5;
+    //private int stone = 5;
     private int food = 5;
 
     /* Unity-specific functions */

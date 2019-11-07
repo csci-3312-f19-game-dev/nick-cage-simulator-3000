@@ -67,7 +67,8 @@ public class TileHandler : MonoBehaviour
     }
     void displayCityOfGold()
     {
-        sr.color = new Vector4(1, 2, 0, 1);
+        sr.sprite = SpriteContainer.SC.cityOfGold;
+        //TODO need to adjust the polygon collider to match the new sprite
     }
 
     public void addUnit()
@@ -82,4 +83,6 @@ public class TileHandler : MonoBehaviour
         Debug.Log("unit removed from " + PlayerManager.PM.prevTile.name + ", " + PlayerManager.PM.prevTile.unitCount + " total units");
         Debug.Log("unit added to " + PlayerManager.PM.currTile.name + ", " + PlayerManager.PM.currTile.unitCount + " total units");
     }
+
+    public void setOrderInLayer(int i) { sr.sortingOrder = i; }
 }

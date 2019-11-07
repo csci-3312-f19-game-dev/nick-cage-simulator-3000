@@ -19,7 +19,8 @@ public class PlayerManager : MonoBehaviour
     //Resources
     //private int wood = 5;
     //private int stone = 5;
-    private int food = 5;
+    public int food = 5;
+    public int moveCount = 0;
 
     /* Unity-specific functions */
 
@@ -38,7 +39,7 @@ public class PlayerManager : MonoBehaviour
     /* Our functions */
     public void purchaseUnit()
     {
-        if (food < 5) Debug.Log("You don't have enough food to purchase a new unit");
+        if (food < 4) Debug.Log("You don't have enough food to purchase a new unit");
         else
         {
             Debug.Log("New unit added");

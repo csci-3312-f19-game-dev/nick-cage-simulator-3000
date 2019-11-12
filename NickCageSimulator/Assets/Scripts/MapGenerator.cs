@@ -13,7 +13,7 @@ public class MapGenerator : MonoBehaviour
     public GameObject cityPrefab;
     public GameObject purchasePrefab;
 
-    private static int width = 12; //using static cuz Random.Range needs it
+    private static int width = 17; //using static cuz Random.Range needs it
     private static int height = 17;
     //private float xOffset = .448f;
     //private float yOffset = .766f;

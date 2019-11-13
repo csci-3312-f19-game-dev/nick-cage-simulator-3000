@@ -7,7 +7,7 @@ public class Unit : MonoBehaviour
     string type;
     float xPos;
     float yPos;
-    //add field for tile currently on?
+    TileHandler tile;
     //attach to sprite?
 
     void Start()
@@ -26,9 +26,9 @@ public class Unit : MonoBehaviour
         //reload time for resources based on a timer
     }
 
-    //TODO: TileHandler.moveUnit() needs to send unit new coordinates - call this unit method with new coords as args
-    private void updateCoords(float x, float y)
+    public void setTile(TileHandler t, float x, float y)
     {
+        tile = t;
         xPos = x;
         yPos = y;
     }

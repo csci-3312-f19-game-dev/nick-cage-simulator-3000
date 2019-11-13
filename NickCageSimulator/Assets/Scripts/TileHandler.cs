@@ -7,6 +7,8 @@ public class TileHandler : MonoBehaviour
     
     private SpriteRenderer sr;
     private int unitCount = 0; //Each tile starts out with no units
+    private List<Unit> units = new List<Unit> ();
+
     private bool isCityOfGold;
     public float milliPercentChanceOfDeath = .13f;
     //Unity has a UnityEngine.Random which cannont generate random numbers,
@@ -75,7 +77,10 @@ public class TileHandler : MonoBehaviour
 
     public void addUnit()
     {
-        unitCount += 1; 
+        unitCount += 1;
+        Unit newUnit = new Unit();
+        units.Add(newUnit);
+        Unit.setTile(this, transform.position.x, transform.position.y); //***
     }
 
     //Starting to get a little messy. One could argue that the player manager should be invoking functions that

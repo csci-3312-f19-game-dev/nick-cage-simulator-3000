@@ -80,7 +80,7 @@ public class TileHandler : MonoBehaviour
         unitCount += 1;
         Unit newUnit = new Unit();
         units.Add(newUnit);
-        Unit.setTile(this, transform.position.x, transform.position.y); //***
+        newUnit.setTile(this, transform.position.x, transform.position.y); //***
     }
 
     //Starting to get a little messy. One could argue that the player manager should be invoking functions that

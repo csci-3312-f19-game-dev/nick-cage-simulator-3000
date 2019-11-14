@@ -37,29 +37,10 @@ public class TileHandler : MonoBehaviour
 
     void OnMouseOver()
     {
+        //Add logic for shift click to move all units at once
         if (Input.GetMouseButtonDown(0))
         {
-            if (PlayerManager.PM.isTileClicked)
-            {
-                PlayerManager.PM.assignCurrTile(this);
-                moveUnit(); 
-                
-                //Should the player still see the city of gold if a unit died when going into it?
-                if (PlayerManager.PM.currTile.isCityOfGold)
-                {
-                    Debug.Log("Congrats, you have found the city of gold!");
-                    displayCityOfGold();
-                    if (unitCount == 10) Debug.Log("Congrats, you have successfully excavated the city of gold!");
-                    //in future prototypes, this might be where we handle win requirements logic
-                }
-
-                PlayerManager.PM.resetPM();
-                
-            } else
-            {
-                PlayerManager.PM.isTileClicked = true;
-                PlayerManager.PM.assignPrevTile(this);
-            }
+            PlayerManager.PM.tileClicked(this);
         }
     }
     
@@ -81,6 +62,27 @@ public class TileHandler : MonoBehaviour
         Unit newUnit = new Unit();
         units.Add(newUnit);
         newUnit.setTile(this, transform.position.x, transform.position.y); //***
+    }
+
+    public Unit grabUnit()
+    {
+        Debug.Log("hmm");
+        Unit temp = units[0];
+        Debug.Log("After hmm");
+        units.RemoveAt(0);
+        return temp;
+    }
+
+    public void transferUnit(Unit u)
+    {
+        units.Add(u);
+        unitCount++;
+        if (isCityOfGold)
+        {
+            Debug.Log("Congrats, you have found the city of gold!");
+            displayCityOfGold();
+            if (unitCount == 10) Debug.Log("Congrats, you have successfully excavated the city of gold!");
+        }
     }
 
     //Starting to get a little messy. One could argue that the player manager should be invoking functions that
@@ -109,5 +111,6 @@ public class TileHandler : MonoBehaviour
         Debug.Log("Oh no, your unit from " + this.name + " has died from dysentery");
     }
 
+    public int numUnits() { return unitCount; }
     public void setOrderInLayer(int i) { sr.sortingOrder = i; }
 }

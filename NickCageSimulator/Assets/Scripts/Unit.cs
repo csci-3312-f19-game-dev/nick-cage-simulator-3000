@@ -8,6 +8,7 @@ public class Unit : MonoBehaviour
     float xPos;
     float yPos;
     TileHandler tile;
+    SpriteRenderer sr;
     //attach to sprite?
 
     void Start()
@@ -15,6 +16,8 @@ public class Unit : MonoBehaviour
         type = "theOnlyTypeRn"; //potential to expand
         xPos = transform.position.x;
         yPos = transform.position.y;
+        sr = GetComponent<SpriteRenderer>();
+        sr.sortingOrder = MapGenerator.MG.topLayer() + 1;
     }
 
     void Update()

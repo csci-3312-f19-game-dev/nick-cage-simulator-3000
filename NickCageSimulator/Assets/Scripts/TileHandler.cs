@@ -8,6 +8,7 @@ public class TileHandler : MonoBehaviour
     private SpriteRenderer sr;
     private int unitCount = 0; //Each tile starts out with no units
     private List<Unit> units = new List<Unit> ();
+    public GameObject defaultUnit;
 
     private bool isCityOfGold;
     public float milliPercentChanceOfDeath = .13f;
@@ -59,7 +60,7 @@ public class TileHandler : MonoBehaviour
     public void addUnit()
     {
         unitCount += 1;
-        Unit newUnit = new Unit();
+        Unit newUnit = Instantiate(defaultUnit, this.transform).GetComponent<Unit>();
         units.Add(newUnit);
         newUnit.setTile(this, transform.position.x, transform.position.y); //***
     }
@@ -70,6 +71,7 @@ public class TileHandler : MonoBehaviour
         Unit temp = units[0];
         Debug.Log("After hmm");
         units.RemoveAt(0);
+        unitCount -= 1;
         return temp;
     }
 
@@ -111,6 +113,9 @@ public class TileHandler : MonoBehaviour
         Debug.Log("Oh no, your unit from " + this.name + " has died from dysentery");
     }
 
-    public int numUnits() { return unitCount; }
+    public int numUnits() {
+        Debug.Log("unit count " + unitCount);
+        return unitCount;
+    }
     public void setOrderInLayer(int i) { sr.sortingOrder = i; }
 }

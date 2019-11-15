@@ -71,7 +71,7 @@ public class PlayerManager : MonoBehaviour
             
     private void moveUnit()
     {
-        if (prevTile.numUnits() < 0) Debug.Log("There are no units on that tile");
+        if (prevTile.numUnits() < 1) { Debug.Log("There are no units on that tile"); }
         else
         {
             double rn = rng.NextDouble();
@@ -79,7 +79,8 @@ public class PlayerManager : MonoBehaviour
             {
                 Debug.Log(rn + " vs " + milliPercentChanceOfDeath);
                 PlayerManager.PM.prevTile.killUnit();
-            } else
+            }
+            else
             {
                 currTile.transferUnit(prevTile.grabUnit());
             }

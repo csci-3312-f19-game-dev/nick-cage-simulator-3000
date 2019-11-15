@@ -5,6 +5,12 @@ using UnityEngine;
 public class MapGenerator : MonoBehaviour
 {
 
+    public static MapGenerator MG;
+    private void Awake()
+    {
+        MG = this;
+    }
+
     public GameObject hexPrefab;
     public GameObject plainsPrefab;
     public GameObject forestPrefab;
@@ -13,8 +19,8 @@ public class MapGenerator : MonoBehaviour
     public GameObject cityPrefab;
     public GameObject purchasePrefab;
 
-    private static int width = 12; //using static cuz Random.Range needs it
-    private static int height = 17;
+    public static int width = 12; //using static cuz Random.Range needs it
+    public static int height = 17;
     //private float xOffset = .448f;
     //private float yOffset = .766f;
     private float xOffset = 37.7f;// 75.4f;
@@ -47,6 +53,9 @@ public class MapGenerator : MonoBehaviour
                 { 
                     th.setAsCityOfGold();
                 }
+                //Temporary, need to remove this before pushing
+                //y==x just as arbitraty way to add random units
+                if (y==x) th.addUnit();
             }
         }
 
@@ -59,6 +68,8 @@ public class MapGenerator : MonoBehaviour
     {
         
     }
+
+    public int topLayer() { return height; }
 
     private GameObject generateRandomBiomeTile()
     {

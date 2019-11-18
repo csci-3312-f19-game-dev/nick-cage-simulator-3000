@@ -9,6 +9,7 @@ public class Unit : MonoBehaviour
     float xPos;
     float yPos;
     TileHandler tile;
+    GameObject thisObject; //weird variable, but needed for removing a unit
     //attach to sprite?
     SpriteRenderer sr;
 
@@ -33,5 +34,10 @@ public class Unit : MonoBehaviour
         tile = th;
         transform.SetParent(tr);
         transform.localPosition = new Vector3(0, 0, 0);   
+    }
+
+    public void assignGameObject(GameObject go)
+    {
+
     }
 }

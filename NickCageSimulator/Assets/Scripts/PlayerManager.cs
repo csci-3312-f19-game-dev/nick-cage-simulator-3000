@@ -10,7 +10,7 @@ public class PlayerManager : MonoBehaviour
     {
         PM = this;
     }
-       
+
     //Managing tiles clicked
     public TileHandler prevTile;
     public TileHandler currTile;
@@ -21,6 +21,12 @@ public class PlayerManager : MonoBehaviour
     //private int stone = 5;
     public int food = 5;
     public int moveCount = 0;
+
+    //Logic
+    //Unity has a UnityEngine.Random which cannont generate random numbers,
+    //must speicify System.Random
+    private System.Random rng = new System.Random();
+    public float milliPercentChanceOfDeath = .13f;
 
     /* Unity-specific functions */
 
@@ -45,6 +51,40 @@ public class PlayerManager : MonoBehaviour
             Debug.Log("New unit added");
             food -= 5;
             prevTile.addUnit();
+        }
+    }
+
+    public void tileClicked(TileHandler tile)
+    {
+        if (!isTileClicked)
+        {
+            prevTile = tile;
+            isTileClicked = true;
+        }
+        else
+        {
+            currTile = tile;
+            moveUnit();
+            resetPM();
+        }
+    }
+            
+    private void moveUnit()
+    {
+        if (prevTile.numUnits() < 1) { Debug.Log("There are no units on that tile"); }
+        else
+        {
+            double rn = rng.NextDouble();
+            if (rn < milliPercentChanceOfDeath)
+            {
+                Debug.Log(rn + " vs " + milliPercentChanceOfDeath);
+                PlayerManager.PM.prevTile.killUnit();
+            }
+            else
+            {
+                Unit u = prevTile.grabUnit();
+                currTile.transferUnit(u);
+            }
         }
     }
 

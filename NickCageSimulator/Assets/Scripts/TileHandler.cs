@@ -8,6 +8,10 @@ public class TileHandler : MonoBehaviour
     private SpriteRenderer sr;
     private int unitCount = 0; //Each tile starts out with no units
     private List<Unit> units = new List<Unit> ();
+    public GameObject defaultUnit;
+
+    private int xGrid;
+    private int yGrid;
 
     private bool isCityOfGold;
     public float milliPercentChanceOfDeath = .13f;
@@ -37,29 +41,10 @@ public class TileHandler : MonoBehaviour
 
     void OnMouseOver()
     {
+        //Add logic for shift click to move all units at once
         if (Input.GetMouseButtonDown(0))
         {
-            if (PlayerManager.PM.isTileClicked)
-            {
-                PlayerManager.PM.assignCurrTile(this);
-                moveUnit(); 
-                
-                //Should the player still see the city of gold if a unit died when going into it?
-                if (PlayerManager.PM.currTile.isCityOfGold)
-                {
-                    Debug.Log("Congrats, you have found the city of gold!");
-                    displayCityOfGold();
-                    if (unitCount == 10) Debug.Log("Congrats, you have successfully excavated the city of gold!");
-                    //in future prototypes, this might be where we handle win requirements logic
-                }
-
-                PlayerManager.PM.resetPM();
-                
-            } else
-            {
-                PlayerManager.PM.isTileClicked = true;
-                PlayerManager.PM.assignPrevTile(this);
-            }
+            PlayerManager.PM.tileClicked(this);
         }
     }
     
@@ -78,28 +63,29 @@ public class TileHandler : MonoBehaviour
     public void addUnit()
     {
         unitCount += 1;
-        Unit newUnit = new Unit();
+        Unit newUnit = Instantiate(defaultUnit, transform).GetComponent<Unit>();
         units.Add(newUnit);
-        newUnit.setTile(this, transform.position.x, transform.position.y); //***
+        //newUnit.setTile(this); //***
     }
 
-    //Starting to get a little messy. One could argue that the player manager should be invoking functions that
-    //manipulate the unit count of the tiles, rather than the tile handler doing it. 
-    //prev/currTile might ought to be private vars, i.e. a tile handler shouldn't
-    //know or care what the curr/prev tile clicked on is. 
-    private void moveUnit()
+    public Unit grabUnit()
     {
-        double rn = rng.NextDouble();
-        if (rn < milliPercentChanceOfDeath)
+        Unit temp = units[0];
+        units.RemoveAt(0);
+        unitCount -= 1;
+        return temp;
+    }
+
+    public void transferUnit(Unit u)
+    {
+        units.Add(u);
+        unitCount += 1;
+        u.setTile(this, transform);
+        if (isCityOfGold)
         {
-            Debug.Log(rn + " vs " + milliPercentChanceOfDeath);
-            PlayerManager.PM.prevTile.killUnit();
-        } else {
-            PlayerManager.PM.food++;
-            PlayerManager.PM.prevTile.unitCount -= 1;
-            PlayerManager.PM.currTile.unitCount += 1;
-            Debug.Log("unit removed from " + PlayerManager.PM.prevTile.name + ", " + PlayerManager.PM.prevTile.unitCount + " total units");
-            Debug.Log("unit added to " + PlayerManager.PM.currTile.name + ", " + PlayerManager.PM.currTile.unitCount + " total units");
+            Debug.Log("Congrats, you have found the city of gold!");
+            displayCityOfGold();
+            if (unitCount == 10) Debug.Log("Congrats, you have successfully excavated the city of gold!");
         }
     }
 
@@ -109,5 +95,14 @@ public class TileHandler : MonoBehaviour
         Debug.Log("Oh no, your unit from " + this.name + " has died from dysentery");
     }
 
+    public int numUnits() {
+        Debug.Log("unit count " + unitCount);
+        return unitCount;
+    }
     public void setOrderInLayer(int i) { sr.sortingOrder = i; }
+    public void assignGridXY(int x, int y) {
+        xGrid = x;
+        yGrid = y;
+    }
+
 }

@@ -41,10 +41,11 @@ public class TileHandler : MonoBehaviour
 
     void OnMouseOver()
     {
-        //Add logic for shift click to move all units at once
         if (Input.GetMouseButtonDown(0))
         {
-            PlayerManager.PM.tileClicked(this);
+            if (Input.GetKey(KeyCode.LeftShift)) Debug.Log("Down");
+            if (Input.GetKey(KeyCode.LeftShift)) PlayerManager.PM.tileClicked(this, true);
+            else PlayerManager.PM.tileClicked(this, false);
         }
     }
     
@@ -65,7 +66,13 @@ public class TileHandler : MonoBehaviour
         unitCount += 1;
         Unit newUnit = Instantiate(defaultUnit, transform).GetComponent<Unit>();
         units.Add(newUnit);
-        //newUnit.setTile(this); //***
+    }
+
+    public List<Unit> grabUnits()
+    {
+        List < Unit > temp = units;
+        units.Clear();
+        return temp;
     }
 
     public Unit grabUnit()
@@ -89,14 +96,28 @@ public class TileHandler : MonoBehaviour
         }
     }
 
+    public void transferUnits(List<Unit> newUnits)
+    {
+        while (newUnits.Count > 0)
+        {
+            Unit u = newUnits[0];
+            u.setTile(this, transform);
+            units.Add(u);
+            unitCount += 1;
+            newUnits.RemoveAt(0);
+        }
+    }
+
     public void killUnit()
     {
+        Unit u = units[0];
+        units.RemoveAt(0);
         unitCount -= 1;
+        Destroy(u.gameObject);
         Debug.Log("Oh no, your unit from " + this.name + " has died from dysentery");
     }
 
     public int numUnits() {
-        Debug.Log("unit count " + unitCount);
         return unitCount;
     }
     public void setOrderInLayer(int i) { sr.sortingOrder = i; }

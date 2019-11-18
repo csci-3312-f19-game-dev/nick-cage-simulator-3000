@@ -54,7 +54,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public void tileClicked(TileHandler tile)
+    public void tileClicked(TileHandler tile, bool shiftDown)
     {
         if (!isTileClicked)
         {
@@ -64,15 +64,47 @@ public class PlayerManager : MonoBehaviour
         else
         {
             currTile = tile;
-            moveUnit();
+            if (shiftDown) moveUnits();
+            else moveUnit();
             resetPM();
+        }
+    }
+
+    //moveUnit and moveUnits have duplicate code, but works for now.
+    private void moveUnits()
+    {
+        if (prevTile.numUnits() < 1) { Debug.Log("There are no units on that tile"); }
+        else
+        {
+            double groupPercentChance = milliPercentChanceOfDeath - (prevTile.numUnits() * .01f);
+            if (groupPercentChance < 0.05) groupPercentChance = 0.05; //has to at least have 5%
+            bool foodGotten = false;
+            while (prevTile.numUnits() > 0)
+            {
+                double rn = rng.NextDouble();
+                if (rn < groupPercentChance)
+                {
+                    Debug.Log(rn + " vs " + groupPercentChance);
+                    prevTile.killUnit();
+                }
+                else
+                {
+                    Unit u = prevTile.grabUnit();
+                    currTile.transferUnit(u);
+                    if (!foodGotten) //ensures you only get on food per move, rather than one food per unit
+                    {
+                        foodGotten = true;
+                        food++;
+                    }
+                }
+            }
         }
     }
             
     private void moveUnit()
     {
         if (prevTile.numUnits() < 1) { Debug.Log("There are no units on that tile"); }
-        else
+        else 
         {
             double rn = rng.NextDouble();
             if (rn < milliPercentChanceOfDeath)
@@ -84,8 +116,9 @@ public class PlayerManager : MonoBehaviour
             {
                 Unit u = prevTile.grabUnit();
                 currTile.transferUnit(u);
+                food++;
             }
-        }
+        } 
     }
 
     public void assignPrevTile(TileHandler tile) { prevTile = tile;  }

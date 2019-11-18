@@ -10,7 +10,7 @@ public class PlayerManager : MonoBehaviour
     {
         PM = this;
     }
-       
+
     //Managing tiles clicked
     public TileHandler prevTile;
     public TileHandler currTile;
@@ -82,7 +82,8 @@ public class PlayerManager : MonoBehaviour
             }
             else
             {
-                currTile.transferUnit(prevTile.grabUnit());
+                Unit u = prevTile.grabUnit();
+                currTile.transferUnit(u);
             }
         }
     }

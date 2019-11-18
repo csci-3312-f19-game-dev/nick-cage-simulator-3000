@@ -48,6 +48,7 @@ public class MapGenerator : MonoBehaviour
                 GameObject temp = Instantiate(tileType, new Vector3(xPos - mapOffestX, (y * yOffset) - mapOffestY, 0), Quaternion.identity);
                 temp.name = temp.name.Substring(0,3) + x + "_" + y;
                 TileHandler th = temp.GetComponent<TileHandler>();
+                th.assignGridXY(x, y);
                 th.setOrderInLayer(height - y); 
                 if (y == goldY && x == goldX)
                 { 

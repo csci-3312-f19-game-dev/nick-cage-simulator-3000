@@ -5,11 +5,12 @@ using UnityEngine;
 public class Unit : MonoBehaviour
 {
     string type;
+    //xPos and yPos are already contained by the transform, so I don't think we need these variables
     float xPos;
     float yPos;
     TileHandler tile;
-    SpriteRenderer sr;
     //attach to sprite?
+    SpriteRenderer sr;
 
     void Start()
     {
@@ -22,17 +23,15 @@ public class Unit : MonoBehaviour
 
     void Update()
     {
-        transform.position = new Vector3(xPos, yPos, 0f); //0 is the z value
-
         //TODO call to TileHandler new method "try to harvest"
         //if successful, TileHandler will add to player stash
         //reload time for resources based on a timer
     }
 
-    public void setTile(TileHandler t, float x, float y)
+    public void setTile(TileHandler th, Transform tr)
     {
-        tile = t;
-        xPos = x;
-        yPos = y;
+        tile = th;
+        transform.SetParent(tr);
+        transform.localPosition = new Vector3(0, 0, 0);   
     }
 }

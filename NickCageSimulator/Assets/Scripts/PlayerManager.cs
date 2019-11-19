@@ -51,6 +51,7 @@ public class PlayerManager : MonoBehaviour
     /* Our functions */
     public void purchaseUnit()
     {
+        Debug.Log("Moo");
         if (food < 5) Debug.Log("You don't have enough food to purchase a new unit");
         else
         {

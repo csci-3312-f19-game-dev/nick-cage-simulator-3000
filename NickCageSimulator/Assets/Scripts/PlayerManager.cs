@@ -15,12 +15,13 @@ public class PlayerManager : MonoBehaviour
     //Managing tiles clicked
     public TileHandler prevTile;
     public TileHandler currTile;
+    public TileHandler lastClickedTile;//for store/unit spawning purposes
     public bool isTileClicked = false;
 
     //Resources
     //private int wood = 5;
     //private int stone = 5;
-    public int food = 5;
+    public int food = 4;
     public int moveCount = 0;
 
     //Winning stuff
@@ -49,12 +50,19 @@ public class PlayerManager : MonoBehaviour
     /* Our functions */
     public void purchaseUnit()
     {
-        if (food < 4) Debug.Log("You don't have enough food to purchase a new unit");
+        if (food < 5) Debug.Log("You don't have enough food to purchase a new unit");
         else
         {
-            Debug.Log("New unit added");
+            Debug.Log("New unit added. Food was " + food);
             food -= 5;
-            prevTile.addUnit();
+            if (prevTile == null)
+            {
+                lastClickedTile.addUnit();//compkains this is null whenclicedafter one move
+            }
+            else
+            {
+                prevTile.addUnit();
+            }
         }
     }
 
@@ -68,6 +76,7 @@ public class PlayerManager : MonoBehaviour
         else
         {
             currTile = tile;
+            lastClickedTile = currTile;
 
             //Check if move is legal (can only move to adjacent tile)
             Tuple<int, int> prevXY = prevTile.getGridXY();

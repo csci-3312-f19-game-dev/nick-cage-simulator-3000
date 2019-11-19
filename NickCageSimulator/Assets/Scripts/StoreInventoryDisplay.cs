@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class StoreInventoryDisplay : MonoBehaviour
 {
     public Text foodDisplay;
+    public Text stoneDisplay;
+    public Text waterDisplay;
+    public Text woodDisplay;
     PlayerManager pm;
     void Start()
     {
@@ -17,5 +20,8 @@ public class StoreInventoryDisplay : MonoBehaviour
     void Update()
     {
         foodDisplay.text = ("" + pm.food);
+        stoneDisplay.text = ("" + pm.stone);
+        woodDisplay.text = ("" + pm.wood);
+        waterDisplay.text = ("" + pm.water);
     }
 }

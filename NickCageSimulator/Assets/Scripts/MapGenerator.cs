@@ -29,9 +29,14 @@ public class MapGenerator : MonoBehaviour
     private int goldY;
     private float mapOffestX = 0;
     private float mapOffestY = 0;
-    // Start is called before the first frame update
+
+    //for use ONLY when instantiating tiles
+    string tileBeingMade;
+
     void Start()
     {
+        tileBeingMade = "oops";
+
         goldX = 2; //Random.Range(0, width); 
         goldY = 2; //Random.Range(0, height);
         Debug.Log("City of gold: " + goldX + ", " + goldY);
@@ -45,9 +50,13 @@ public class MapGenerator : MonoBehaviour
 
                 //GameObject temp = Instantiate(hexPrefab, new Vector3(xPos, y * yOffset, 0), Quaternion.identity);
                 var tileType = generateRandomBiomeTile();
+
+
+
                 GameObject temp = Instantiate(tileType, new Vector3(xPos - mapOffestX, (y * yOffset) - mapOffestY, 0), Quaternion.identity);
                 temp.name = temp.name.Substring(0,3) + x + "_" + y;
                 TileHandler th = temp.GetComponent<TileHandler>();
+                th.typeOfTileName = tileBeingMade;//tell tile what its type is
                 th.assignGridXY(x, y);
                 th.setOrderInLayer(height - y); 
                 if (y == goldY && x == goldX)
@@ -77,11 +86,21 @@ public class MapGenerator : MonoBehaviour
         int rand = Random.Range(0, 4);
         switch (rand)
         {
-            case 0: return plainsPrefab;
-            case 1: return riverPrefab;
-            case 2: return forestPrefab;
-            case 3: return mountainsPrefab;
-            default: return plainsPrefab;
+            case 0:
+                tileBeingMade = "plains";////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                return plainsPrefab;
+            case 1:
+                tileBeingMade = "river";
+                return riverPrefab;
+            case 2:
+                tileBeingMade = "forest";
+                return forestPrefab;
+            case 3:
+                tileBeingMade = "mountains";
+                return mountainsPrefab;
+            default:
+                tileBeingMade = "plains";
+                return plainsPrefab;
         }
     }
 }

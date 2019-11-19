@@ -20,8 +20,9 @@ public class PlayerManager : MonoBehaviour
     public bool isTileClicked = false;
 
     //Resources
-    //private int wood = 5;
-    //private int stone = 5;
+    public int wood = 5;
+    public int stone = 5;
+    public int water = 5;
     public int food = 4;
     public int moveCount = 0;
 
@@ -114,7 +115,7 @@ public class PlayerManager : MonoBehaviour
         {
             double groupPercentChance = milliPercentChanceOfDeath - (prevTile.numUnits() * .01f);
             if (groupPercentChance < 0.05) groupPercentChance = 0.05; //has to at least have 5%
-            bool foodGotten = false;
+            bool resourceGotten = false;
             while (prevTile.numUnits() > 0)
             {
                 double rn = rng.NextDouble();
@@ -127,16 +128,41 @@ public class PlayerManager : MonoBehaviour
                 {
                     Unit u = prevTile.grabUnit();
                     currTile.transferUnit(u);
-                    if (!foodGotten) //ensures you only get on food per move, rather than one food per unit
+                    if (!resourceGotten) //ensures you only get on food per move, rather than one food per unit
                     {
-                        foodGotten = true;
-                        food++;
+                        //Add appropriate resourece to inventory
+                        resourceGotten = true;
+                        //food++;
+                        getResource();
                     }
                 }
             }
         }
     }
             
+    void getResource()
+    {
+        switch (currTile.typeOfTileName)
+        {
+            case "plains":
+                food++;
+                break;
+            case "river":
+                water++;
+                break;
+            case "forest":
+                wood++;
+                food++;
+                break;
+            case"stone":
+                stone++;
+                break;
+            default:
+                food++;
+                break;
+        }
+    }
+
     private void moveUnit()
     {
         if (prevTile.numUnits() < 1) { Debug.Log("There are no units on that tile"); }
@@ -152,7 +178,8 @@ public class PlayerManager : MonoBehaviour
             {
                 Unit u = prevTile.grabUnit();
                 currTile.transferUnit(u);
-                food++;
+                //food++;
+                getResource();
             }
         } 
     }

@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class TileHandler : MonoBehaviour
 {
-    
+
     private SpriteRenderer sr;
     private int unitCount = 0; //Each tile starts out with no units
-    private List<Unit> units = new List<Unit> ();
+    private List<Unit> units = new List<Unit>();
     public GameObject defaultUnit;
+    public String typeOfTileName;
 
     private int xGrid;
     private int yGrid;

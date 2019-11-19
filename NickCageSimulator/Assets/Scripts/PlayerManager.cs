@@ -32,16 +32,23 @@ public class PlayerManager : MonoBehaviour
     //Logic
     //Unity has a UnityEngine.Random which cannont generate random numbers,
     //must speicify System.Random
-    private System.Random rng = new System.Random();
-    public float milliPercentChanceOfDeath = .13f;
+    private static System.Random rng = new System.Random();
+    public float milliPercentChanceOfDeath = .08f;
 
     /* Unity-specific functions */
 
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
+        int cont = 0;
+        for (int i = 0; i < 1000; i++)
+        {
+            double rn = rng.NextDouble();
+            if (rn < 0.05) cont++;
+            
+        }
+        Debug.Log("count " + cont);
+        }
 
     // Update is called once per frame
     void Update()
@@ -114,14 +121,14 @@ public class PlayerManager : MonoBehaviour
         else
         {
             double groupPercentChance = milliPercentChanceOfDeath - (prevTile.numUnits() * .01f);
-            if (groupPercentChance < 0.05) groupPercentChance = 0.05; //has to at least have 5%
+            if (groupPercentChance < 0.01) groupPercentChance = 0.01; //has to at least have 5%
             bool resourceGotten = false;
             while (prevTile.numUnits() > 0)
             {
                 double rn = rng.NextDouble();
                 if (rn < groupPercentChance)
                 {
-                    //Debug.Log(rn + " vs " + groupPercentChance);
+                    Debug.Log(rn + " vs " + groupPercentChance);
                     prevTile.killUnit();
                 }
                 else

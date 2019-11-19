@@ -37,8 +37,8 @@ public class MapGenerator : MonoBehaviour
     {
         tileBeingMade = "oops";
 
-        goldX = 2; //Random.Range(0, width); 
-        goldY = 2; //Random.Range(0, height);
+        goldX = Random.Range(0, width); 
+        goldY = Random.Range(0, height);
         Debug.Log("City of gold: " + goldX + ", " + goldY);
 
         for (int x=0; x<width; x++)
@@ -65,7 +65,11 @@ public class MapGenerator : MonoBehaviour
                 }
                 //Temporary, need to remove this before pushing
                 //y==x just as arbitraty way to add random units
-                if (y==x) th.addUnit();
+               // if (y==x) th.addUnit();
+               if(x ==0 && y == 0)
+                {
+                    th.addUnit();
+                }
             }
         }
 

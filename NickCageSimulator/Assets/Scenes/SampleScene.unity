@@ -902,7 +902,7 @@ PrefabInstance:
     - target: {fileID: 4778211038192184243, guid: 99ca06e65a04f664ca2a3ef3dca119b9,
         type: 3}
       propertyPath: milliPercentChanceOfDeath
-      value: 0.13
+      value: 0.06
       objectReference: {fileID: 0}
     - target: {fileID: 4778211038192184243, guid: 99ca06e65a04f664ca2a3ef3dca119b9,
         type: 3}

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -43,9 +44,15 @@ public class TileHandler : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (Input.GetKey(KeyCode.LeftShift)) Debug.Log("Down");
-            if (Input.GetKey(KeyCode.LeftShift)) PlayerManager.PM.tileClicked(this, true);
-            else PlayerManager.PM.tileClicked(this, false);
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                //Debug.Log("Down");
+                PlayerManager.PM.tileClicked(this, true);
+            }
+            else
+            {
+                PlayerManager.PM.tileClicked(this, false);
+            }
         }
     }
     
@@ -62,16 +69,17 @@ public class TileHandler : MonoBehaviour
     }
 
     public void addUnit()
-    {
-        unitCount += 1;
+    {        
         Unit newUnit = Instantiate(defaultUnit, transform).GetComponent<Unit>();
         units.Add(newUnit);
+        unitCount += 1;
+        newUnit.setTile(this, transform);
     }
 
     public Unit grabUnit()
     {
-        Unit temp = units[0];
-        units.RemoveAt(0);
+        Unit temp = units[unitCount-1];
+        units.RemoveAt(unitCount-1);
         unitCount -= 1;
         return temp;
     }
@@ -91,8 +99,8 @@ public class TileHandler : MonoBehaviour
 
     public void killUnit()
     {
-        Unit u = units[0];
-        units.RemoveAt(0);
+        Unit u = units[unitCount-1];
+        units.RemoveAt(unitCount-1);
         unitCount -= 1;
         Destroy(u.gameObject);
         Debug.Log("Oh no, your unit from " + this.name + " has died from dysentery");
@@ -106,5 +114,9 @@ public class TileHandler : MonoBehaviour
         xGrid = x;
         yGrid = y;
     }
-
+    
+    public Tuple<int,int> getGridXY()
+    {
+        return new Tuple<int, int>(xGrid, yGrid);
+    }
 }

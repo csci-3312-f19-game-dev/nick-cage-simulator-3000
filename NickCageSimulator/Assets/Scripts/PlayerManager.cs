@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -67,8 +68,28 @@ public class PlayerManager : MonoBehaviour
         else
         {
             currTile = tile;
-            if (shiftDown) moveUnits();
-            else moveUnit();
+
+            //Check if move is legal (can only move to adjacent tile)
+            Tuple<int, int> prevXY = prevTile.getGridXY();
+            int prevX = prevXY.Item1;
+            int prevY = prevXY.Item2;
+            Tuple<int, int> currXY = currTile.getGridXY();
+            int currX = currXY.Item1;
+            int currY = currXY.Item2;
+            bool legalMove;
+            if (currX - 1 <= prevX && prevX <= currX + 1 && currY - 1 <= prevY && prevY <= currY + 1) legalMove = true;
+            else legalMove = false;
+
+            if (legalMove)
+            {
+                if (shiftDown) moveUnits();
+                else moveUnit();                
+            }
+            else
+            {
+                Debug.Log("Illegal Move");
+            }
+
             resetPM();
         }
     }
@@ -87,7 +108,7 @@ public class PlayerManager : MonoBehaviour
                 double rn = rng.NextDouble();
                 if (rn < groupPercentChance)
                 {
-                    Debug.Log(rn + " vs " + groupPercentChance);
+                    //Debug.Log(rn + " vs " + groupPercentChance);
                     prevTile.killUnit();
                 }
                 else

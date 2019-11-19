@@ -6,13 +6,13 @@ public class StoreManager : MonoBehaviour
 {
     public GameObject storeScreen;
     public GameObject brokenPurchaseButton;
-    private bool isOpen;
     // Start is called before the first frame update
     void Start()
     {
-        storeScreen.GetComponent<Renderer>().enabled = false;
+        //storeScreen.GetComponent<Renderer>().enabled = false;
+        storeScreen.SetActive(false);
         //brokenPurchaseButton.GetComponent<Renderer>().enabled = false;
-        isOpen = false;
+        PlayerManager.StoreMenuIsOpen = false;
     }
 
     // Update is called once per frame
@@ -22,8 +22,9 @@ public class StoreManager : MonoBehaviour
     }
 
     void OnMouseDown(){
-        storeScreen.GetComponent<Renderer>().enabled = !isOpen;
+        //storeScreen.GetComponent<Renderer>().enabled = !isOpen;
         //brokenPurchaseButton.GetComponent<Renderer>().enabled = !isOpen;
-        isOpen = !isOpen;
+        storeScreen.SetActive(!PlayerManager.StoreMenuIsOpen);
+        PlayerManager.StoreMenuIsOpen = !PlayerManager.StoreMenuIsOpen;
     }
 }

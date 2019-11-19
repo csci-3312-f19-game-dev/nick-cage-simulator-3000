@@ -20,6 +20,7 @@ public class HackyUnitPurchase : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            Debug.Log("Attempt to purchase unit.");
             if (PlayerManager.PM.prevTile != null)
             {
                 PlayerManager.PM.purchaseUnit();

@@ -7,6 +7,7 @@ public class PlayerManager : MonoBehaviour
 {
     /* Singleton */
     public static PlayerManager PM;
+    public static bool StoreMenuIsOpen;
     private void Awake()
     {
         PM = this;
@@ -68,6 +69,7 @@ public class PlayerManager : MonoBehaviour
 
     public void tileClicked(TileHandler tile, bool shiftDown)
     {
+        if(StoreMenuIsOpen) return;
         if (!isTileClicked)
         {
             prevTile = tile;
@@ -106,6 +108,7 @@ public class PlayerManager : MonoBehaviour
     //moveUnit and moveUnits have duplicate code, but works for now.
     private void moveUnits()
     {
+        if(StoreMenuIsOpen) return;
         if (prevTile.numUnits() < 1) { Debug.Log("There are no units on that tile"); }
         else
         {
@@ -136,6 +139,7 @@ public class PlayerManager : MonoBehaviour
             
     private void moveUnit()
     {
+        if(StoreMenuIsOpen) return;
         if (prevTile.numUnits() < 1) { Debug.Log("There are no units on that tile"); }
         else 
         {

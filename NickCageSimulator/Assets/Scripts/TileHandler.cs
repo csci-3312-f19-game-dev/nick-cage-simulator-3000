@@ -68,13 +68,6 @@ public class TileHandler : MonoBehaviour
         units.Add(newUnit);
     }
 
-    public List<Unit> grabUnits()
-    {
-        List < Unit > temp = units;
-        units.Clear();
-        return temp;
-    }
-
     public Unit grabUnit()
     {
         Unit temp = units[0];
@@ -92,19 +85,7 @@ public class TileHandler : MonoBehaviour
         {
             Debug.Log("Congrats, you have found the city of gold!");
             displayCityOfGold();
-            if (unitCount == 10) Debug.Log("Congrats, you have successfully excavated the city of gold!");
-        }
-    }
-
-    public void transferUnits(List<Unit> newUnits)
-    {
-        while (newUnits.Count > 0)
-        {
-            Unit u = newUnits[0];
-            u.setTile(this, transform);
-            units.Add(u);
-            unitCount += 1;
-            newUnits.RemoveAt(0);
+            if (unitCount >= PlayerManager.PM.unitsToWin) Debug.Log("Congrats, you have successfully excavated the city of gold!");
         }
     }
 

@@ -22,6 +22,9 @@ public class PlayerManager : MonoBehaviour
     public int food = 5;
     public int moveCount = 0;
 
+    //Winning stuff
+    public int unitsToWin = 10;
+
     //Logic
     //Unity has a UnityEngine.Random which cannont generate random numbers,
     //must speicify System.Random

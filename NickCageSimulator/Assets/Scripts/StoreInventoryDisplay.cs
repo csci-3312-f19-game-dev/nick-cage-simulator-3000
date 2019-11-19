@@ -16,6 +16,6 @@ public class StoreInventoryDisplay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        foodDisplay.text = ("Food: " + pm.food);
+        foodDisplay.text = ("" + pm.food);
     }
 }

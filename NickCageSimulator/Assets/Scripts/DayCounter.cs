@@ -19,7 +19,7 @@ public class DayCounter : MonoBehaviour
 
     void Update()
     {
-        dayDisplay.text = ("Days Gone By: " + day);
+        dayDisplay.text = ("Day " + day);
     }
 
     //Will run independent of everything else... I think?

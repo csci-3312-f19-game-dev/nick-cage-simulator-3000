@@ -33,7 +33,8 @@ public class Unit : MonoBehaviour
     {
         tile = th;
         transform.SetParent(tr);
-        transform.localPosition = new Vector3(0, 0, 0);   
+        int n = th.numUnits();
+        transform.localPosition = new Vector3(-20+10*n, 0, 0);   
     }
 
     public void assignGameObject(GameObject go)

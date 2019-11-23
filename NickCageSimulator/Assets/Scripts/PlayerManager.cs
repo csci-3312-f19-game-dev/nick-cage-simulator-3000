@@ -82,6 +82,7 @@ public class PlayerManager : MonoBehaviour
         if (!isTileClicked)
         {
             prevTile = tile;
+            prevTile.clickHighlight();
             isTileClicked = true;
         }
         else
@@ -195,6 +196,7 @@ public class PlayerManager : MonoBehaviour
     public void assignCurrTile(TileHandler tile) { currTile = tile; }
     public void resetPM()
     {
+        prevTile.dehighlight();
         assignCurrTile(null);
         assignPrevTile(null);
         isTileClicked = false;

@@ -120,4 +120,14 @@ public class TileHandler : MonoBehaviour
     {
         return new Tuple<int, int>(xGrid, yGrid);
     }
+
+    public void clickHighlight()
+    {
+        sr.color = new Color32(0x7B, 0x7B, 0x7B, 0xFF);
+    }
+
+    public void dehighlight()
+    {
+        sr.color = new Color32(0xFF, 0xFF, 0xFF, 0xFF);
+    }
 }

@@ -11,6 +11,7 @@ public class TileHandler : MonoBehaviour
     private List<Unit> units = new List<Unit>();
     public GameObject defaultUnit;
     public String typeOfTileName;
+    private bool depleted;
 
     private int xGrid;
     private int yGrid;
@@ -27,6 +28,7 @@ public class TileHandler : MonoBehaviour
     {
         sr = GetComponent<SpriteRenderer>();
         isCityOfGold = false;
+        depleted = false;
     }
 
     // Start is called before the first frame update
@@ -39,6 +41,32 @@ public class TileHandler : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public void deplete()
+    {
+        depleted = true;
+        //TODO change image
+        Time.timeScale = 1;
+        //StartCoroutine("ResourceRegeneration");
+        StartCoroutine("ResourceRegeneration");
+    }
+
+    IEnumerator ResourceRegeneration()
+    {
+        yield return new WaitForSeconds(20);
+        replenish();
+    }
+
+    void replenish()
+    {
+        //TODO change image
+        depleted = false;
+    }
+
+    public bool isDepleted()
+    {
+        return depleted;
     }
 
     void OnMouseOver()

@@ -33,7 +33,7 @@ public class PlayerManager : MonoBehaviour
     //Unity has a UnityEngine.Random which cannont generate random numbers,
     //must speicify System.Random
     private static System.Random rng = new System.Random();
-    public float milliPercentChanceOfDeath = .08f;
+    public float milliPercentChanceOfDeath = 0f;//.08f;
 
     /* Unity-specific functions */
 
@@ -150,6 +150,8 @@ public class PlayerManager : MonoBehaviour
             
     void getResource()
     {
+        if (currTile.isDepleted())
+            return;
         switch (currTile.typeOfTileName)
         {
             case "plains":
@@ -169,6 +171,7 @@ public class PlayerManager : MonoBehaviour
                 food++;
                 break;
         }
+        currTile.deplete();
     }
 
     private void moveUnit()

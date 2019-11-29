@@ -100,10 +100,11 @@ public class MapGenerator : MonoBehaviour
                 tileBeingMade = "forest";
                 return forestPrefab;
             case 3:
-                tileBeingMade = "mountains";
+                tileBeingMade = "stone";
                 return mountainsPrefab;
             default:
                 tileBeingMade = "plains";
+                Debug.Log("in the default. something wrong");
                 return plainsPrefab;
         }
     }

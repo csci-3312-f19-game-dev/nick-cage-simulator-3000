@@ -122,6 +122,8 @@ public class TileHandler : MonoBehaviour
         {
             Debug.Log("Congrats, you have found the city of gold!");
             displayCityOfGold();
+                //MOVE INTO WIN STATE BELOW, EVENTUALLY
+                GameManager.GM.ChangeScene();
             if (unitCount >= PlayerManager.PM.unitsToWin) Debug.Log("Congrats, you have successfully excavated the city of gold!");
         }
     }

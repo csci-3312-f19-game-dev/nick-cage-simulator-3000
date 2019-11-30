@@ -37,8 +37,8 @@ public class MapGenerator : MonoBehaviour
     {
         tileBeingMade = "oops";
 
-        goldX = Random.Range(0, width); 
-        goldY = Random.Range(0, height);
+        goldX = 1;//TODO REMOVE Random.Range(0, width); 
+        goldY = 1; //TODO REMOVE Random.Range(0, height);
         Debug.Log("City of gold: " + goldX + ", " + goldY);
 
         for (int x=0; x<width; x++)

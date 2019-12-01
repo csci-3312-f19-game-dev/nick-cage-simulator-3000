@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
         SM = new SceneManager();
         sceneCount = 0;
 
-        SceneManager.LoadScene(sceneBuildIndex:0);
+    //    SceneManager.LoadScene(sceneBuildIndex:0);
         DontDestroyOnLoad(GM);
     }
 

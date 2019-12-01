@@ -122,7 +122,9 @@ public class TileHandler : MonoBehaviour
         {
             Debug.Log("Congrats, you have found the city of gold!");
             displayCityOfGold();
-                //MOVE INTO WIN STATE BELOW, EVENTUALLY
+            //MOVE INTO WIN STATE BELOW, EVENTUALLY
+                //GameManager.GM.endSceneText.text = "You Won!";
+                GameManager.GM.endSceneString = "You Won!";
                 GameManager.GM.ChangeScene();
             if (unitCount >= PlayerManager.PM.unitsToWin) Debug.Log("Congrats, you have successfully excavated the city of gold!");
         }
@@ -135,6 +137,13 @@ public class TileHandler : MonoBehaviour
         unitCount -= 1;
         Destroy(u.gameObject);
         Debug.Log("Oh no, your unit from " + this.name + " has died from dysentery");
+
+        if(unitCount == 0)
+        {
+            //GameManager.GM.endSceneText.text = "GAME OVER.";
+            GameManager.GM.endSceneString = "GAME OVER";
+            GameManager.GM.ChangeScene();
+        }
     }
 
     public int numUnits() {

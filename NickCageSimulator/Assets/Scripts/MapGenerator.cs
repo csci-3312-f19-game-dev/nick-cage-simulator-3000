@@ -17,13 +17,12 @@ public class MapGenerator : MonoBehaviour
     public GameObject mountainsPrefab;
     public GameObject riverPrefab;
     public GameObject cityPrefab;
-    public GameObject purchasePrefab;
 
     //TODO NEED TO ADD TO SCENE
     public GameObject forestDepPrefab;
     public GameObject plainsDepPrefab;
     public GameObject mountainsDepPrefab;
-    public GameObject RiverDepPrefab;
+    public GameObject riverDepPrefab;
 
     public static int width = 16; //using static cuz Random.Range needs it
     public static int height = 17;
@@ -45,8 +44,8 @@ public class MapGenerator : MonoBehaviour
     {
         tileBeingMade = "oops";
 
-        goldX = 1;//TODO REMOVE Random.Range(0, width); 
-        goldY = 1; //TODO REMOVE Random.Range(0, height);
+        goldX = Random.Range(0, width); 
+        goldY = Random.Range(0, height);
         Debug.Log("City of gold: " + goldX + ", " + goldY);
 
         for (int x=0; x<width; x++)
@@ -92,8 +91,6 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
-        //Really hackish UI elements. I would have just used normal UI elements, but I'm no 100% sure how to handle it with git
-        Instantiate(purchasePrefab, new Vector3(-60, -60, 0), Quaternion.identity);
     }
 
     // Update is called once per frame
@@ -126,53 +123,5 @@ public class MapGenerator : MonoBehaviour
                 Debug.Log("in the default. something wrong");
                 return plainsPrefab;
         }
-    }
-
-    public void depletedImage(string t)
-    {
-        switch(t)
-        {
-            case "plains":
-                //set tile
-                break;
-            case "river":
-                //set tile
-                break;
-            case "forest":
-                //set tile
-                break;
-            case "stone":
-                //set tile
-                break;
-            default:
-                //set tile
-                Debug.Log("Something went wrong. In default 2");
-                break;
-        }
-
-    }
-
-    public void replenishedImage(string t)
-    {
-        switch (t)
-        {
-            case "plains":
-                //set tile
-                break;
-            case "river":
-                //set tile
-                break;
-            case "forest":
-                //set tile
-                break;
-            case "stone":
-                //set tile
-                break;
-            default:
-                //set tile
-                Debug.Log("Something went wrong. In default 3");
-                break;
-        }
-
     }
 }

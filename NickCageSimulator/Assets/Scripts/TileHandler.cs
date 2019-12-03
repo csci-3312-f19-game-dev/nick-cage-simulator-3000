@@ -53,11 +53,32 @@ public class TileHandler : MonoBehaviour
 
     public void deplete()
     {
+        Debug.Log("IN DEPLETED");
         depleted = true;
-            //TODO change image
-            MapGenerator.MG.depletedImage(typeOfTileName);
+        //TODO change image
+        // MapGenerator.MG.depletedImage(typeOfTileName);
+
+        switch (typeOfTileName)
+        {
+            case "plains":
+                changeSprite(MapGenerator.MG.plainsDepPrefab);
+                break;
+            case "river":
+                changeSprite(MapGenerator.MG.riverDepPrefab);
+                break;
+            case "forest":
+                changeSprite(MapGenerator.MG.forestDepPrefab);
+                break;
+            case "stone":
+                changeSprite(MapGenerator.MG.mountainsDepPrefab);
+                break;
+            default:
+                changeSprite(MapGenerator.MG.plainsDepPrefab);
+                Debug.Log("Something went wrong. In default 2");
+                break;
+        }
+
         Time.timeScale = 1;
-        //StartCoroutine("ResourceRegeneration");
         StartCoroutine("ResourceRegeneration");
     }
 
@@ -69,8 +90,25 @@ public class TileHandler : MonoBehaviour
 
     void replenish()
     {
-            //TODO change image
-            MapGenerator.MG.replenishedImage(typeOfTileName);
+        switch (typeOfTileName)
+        {
+            case "plains":
+                changeSprite(MapGenerator.MG.plainsPrefab);
+                break;
+            case "river":
+                changeSprite(MapGenerator.MG.riverPrefab);
+                break;
+            case "forest":
+                changeSprite(MapGenerator.MG.forestPrefab);
+                break;
+            case "stone":
+                changeSprite(MapGenerator.MG.mountainsPrefab);
+                break;
+            default:
+                changeSprite(MapGenerator.MG.plainsPrefab);
+                Debug.Log("Something went wrong. In default 2");
+                break;
+        }
         depleted = false;
     }
 
@@ -201,5 +239,11 @@ public class TileHandler : MonoBehaviour
     public void dehighlight()
     {
         sr.color = new Color32(0xFF, 0xFF, 0xFF, 0xFF);
+    }
+
+    public void changeSprite(GameObject g)
+    {
+        Debug.Log("inchangesprite");
+        //sr.sprite = g.GetComponent<Sprite>();
     }
 }

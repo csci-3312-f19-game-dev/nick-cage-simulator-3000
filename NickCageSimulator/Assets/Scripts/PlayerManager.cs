@@ -45,26 +45,25 @@ public class PlayerManager : MonoBehaviour
         {
             double rn = rng.NextDouble();
             if (rn < 0.05) cont++;
-            
+
         }
         Debug.Log("count " + cont);
-        }
+    }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     /* Our functions */
-    public void purchaseUnit()
+    public void purchaseUnit(int price)
     {
-        Debug.Log("Moo");
-        if (food < 5) Debug.Log("You don't have enough food to purchase a new unit");
+        if (food < price) Debug.Log("You don't have enough food to purchase a new unit");
         else
         {
             Debug.Log("New unit added. Food was " + food);
-            food -= 5;
+            food -= price;
             if (prevTile == null)
             {
                 lastClickedTile.addUnit();//compkains this is null whenclicedafter one move
@@ -76,9 +75,97 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    public void makePurchase(Resource purchasing, Resource currency)
+    {
+        int price = StoreManager.getCurrentExchangePrice(purchasing, currency);
+        if (purchasing == Resource.Units)
+        {
+            if (PM.prevTile != null)
+            {
+                PM.purchaseUnit(price);
+                PM.resetPM();
+            }
+            else Debug.Log("Please select tile to place new unit on");
+            return;
+        }
+        switch (currency)
+        {
+            //ensure that they have enough of the right currency and take it if they do
+            case Resource.Food:
+                if (food < price)
+                {
+                    //don't have enough currency
+                    Debug.Log("You don't have enough food to purchase this.");
+                    return;
+                }
+                else
+                {
+                    food -= price;
+                }
+                break;
+            case Resource.Stone:
+                if (stone < price)
+                {
+                    //don't have enough currency
+                    Debug.Log("You don't have enough stone to purchase this.");
+                    return;
+                }
+                else
+                {
+                    stone -= price;
+                }
+                break;
+            case Resource.Water:
+                if (water < price)
+                {
+                    //don't have enough currency
+                    Debug.Log("You don't have enough water to purchase this.");
+                    return;
+                }
+                else
+                {
+                    water -= price;
+                }
+                break;
+            case Resource.Wood:
+                if (wood < price)
+                {
+                    //don't have enough currency
+                    Debug.Log("You don't have enough wood to purchase this.");
+                    return;
+                }
+                else
+                {
+                    wood -= price;
+                }
+                break;
+            default:
+                Debug.Log("Currency Error");
+                return;
+        }
+
+        switch (purchasing)
+        {
+            case Resource.Food:
+                food++;
+                break;
+            case Resource.Stone:
+                stone++;
+                break;
+            case Resource.Water:
+                water++;
+                break;
+            case Resource.Wood:
+                wood++;
+                break;
+            default:
+                break;
+        }
+    }
+
     public void tileClicked(TileHandler tile, bool shiftDown)
     {
-        if(StoreMenuIsOpen) return;
+        if (StoreMenuIsOpen) return;
         if (!isTileClicked)
         {
             prevTile = tile;
@@ -104,7 +191,7 @@ public class PlayerManager : MonoBehaviour
             if (legalMove)
             {
                 if (shiftDown) moveUnits();
-                else moveUnit();                
+                else moveUnit();
             }
             else
             {
@@ -131,7 +218,8 @@ public class PlayerManager : MonoBehaviour
                 {
                     prevTile.killUnit();
                 }
-            } else
+            }
+            else
             {
                 while (prevTile.numUnits() > 0)
                 {
@@ -154,10 +242,10 @@ public class PlayerManager : MonoBehaviour
                         }
                     }
                 }
-            }            
+            }
         }
     }
-            
+
     void getResource()
     {
         if (currTile.isDepleted())
@@ -174,7 +262,7 @@ public class PlayerManager : MonoBehaviour
                 wood++;
                 food++;
                 break;
-            case"stone":
+            case "stone":
                 stone++;
                 break;
             default:
@@ -187,7 +275,7 @@ public class PlayerManager : MonoBehaviour
     private void moveUnit()
     {
         if (prevTile.numUnits() < 1) { Debug.Log("There are no units on that tile"); }
-        else 
+        else
         {
             if (currTile.numEnemies() > 0)
             {
@@ -213,10 +301,10 @@ public class PlayerManager : MonoBehaviour
                 }
 
             }
-        } 
+        }
     }
 
-    public void assignPrevTile(TileHandler tile) { prevTile = tile;  }
+    public void assignPrevTile(TileHandler tile) { prevTile = tile; }
     public void assignCurrTile(TileHandler tile) { currTile = tile; }
     public void resetPM()
     {

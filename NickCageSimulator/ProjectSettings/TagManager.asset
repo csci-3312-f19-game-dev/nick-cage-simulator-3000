@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PlayerManagerTag
   - endText
+  - Tile
   layers:
   - Default
   - TransparentFX

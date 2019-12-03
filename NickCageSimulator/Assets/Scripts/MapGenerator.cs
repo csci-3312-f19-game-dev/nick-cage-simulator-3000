@@ -33,6 +33,8 @@ public class MapGenerator : MonoBehaviour
     //for use ONLY when instantiating tiles
     string tileBeingMade;
 
+    private static System.Random rng = new System.Random();
+
     void Start()
     {
         tileBeingMade = "oops";
@@ -54,6 +56,7 @@ public class MapGenerator : MonoBehaviour
 
 
                 GameObject temp = Instantiate(tileType, new Vector3(xPos - mapOffestX, (y * yOffset) - mapOffestY, 0), Quaternion.identity);
+                temp.gameObject.tag = "Tile";
                 temp.name = temp.name.Substring(0,3) + x + "_" + y;
                 TileHandler th = temp.GetComponent<TileHandler>();
                 th.typeOfTileName = tileBeingMade;//tell tile what its type is
@@ -66,10 +69,20 @@ public class MapGenerator : MonoBehaviour
                 //Temporary, need to remove this before pushing
                 //y==x just as arbitraty way to add random units
                // if (y==x) th.addUnit();
-               if(x ==0 && y == 0)
+               if(x == 0 && y == 0)
                 {
                     th.addUnit();
                 }
+               /*if (x == 3 && y == 3)
+                {
+                    th.addEnemy();
+                    th.addEnemy();
+                }*/
+               if (rng.NextDouble() < .1)
+                {
+                    th.addEnemy();
+                }
+
             }
         }
 

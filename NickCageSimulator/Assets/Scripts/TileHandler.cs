@@ -9,9 +9,15 @@ public class TileHandler : MonoBehaviour
     private SpriteRenderer sr;
     private int unitCount = 0; //Each tile starts out with no units
     private List<Unit> units = new List<Unit>();
+    private int enemyCount = 0; //Each tile starts out with no anemonies
+    private List<Enemy> enemies = new List<Enemy>();
     public GameObject defaultUnit;
+    public GameObject defaultEnemy;
     public String typeOfTileName;
     private bool depleted;
+    private float currTime = 0;
+    private float enemyMoveRate = 5f;
+    private float prevTime0;
 
     private int xGrid;
     private int yGrid;
@@ -29,6 +35,8 @@ public class TileHandler : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         isCityOfGold = false;
         depleted = false;
+        Time.timeScale = 1f;
+        prevTime0 = Time.time;
     }
 
     // Start is called before the first frame update
@@ -95,7 +103,7 @@ public class TileHandler : MonoBehaviour
     {
         sr.sprite = SpriteContainer.SC.cityOfGold;
         //TODO need to adjust the polygon collider to match the new sprite
-    }
+    }   
 
     public void addUnit()
     {        
@@ -105,12 +113,28 @@ public class TileHandler : MonoBehaviour
         newUnit.setTile(this, transform);
     }
 
+    public void addEnemy()
+    {
+        Enemy newEnemy = Instantiate(defaultEnemy, transform).GetComponent<Enemy>();
+        enemies.Add(newEnemy);
+        enemyCount += 1;
+        newEnemy.setTile(this, transform);
+    }
+
     public Unit grabUnit()
     {
         Unit temp = units[unitCount-1];
         units.RemoveAt(unitCount-1);
         unitCount -= 1;
         return temp;
+    }
+
+    public void grabEnemy()
+    {
+        Enemy temp = enemies[enemyCount - 1];
+        enemies.RemoveAt(enemyCount - 1);
+        enemyCount -= 1;
+        Destroy(temp.gameObject);
     }
 
     public void transferUnit(Unit u)
@@ -135,19 +159,26 @@ public class TileHandler : MonoBehaviour
         Unit u = units[unitCount-1];
         units.RemoveAt(unitCount-1);
         unitCount -= 1;
-        Destroy(u.gameObject);
-        Debug.Log("Oh no, your unit from " + this.name + " has died from dysentery");
+        Destroy(u.gameObject);        
 
-        if(unitCount == 0)
+        /*if(unitCount == 0)
         {
             //GameManager.GM.endSceneText.text = "GAME OVER.";
             GameManager.GM.endSceneString = "GAME OVER";
             GameManager.GM.ChangeScene();
-        }
+        }*/
     }
-
+    
     public int numUnits() {
         return unitCount;
+    }
+    public int numEnemies()
+    {
+        return enemyCount;
+    }
+    public List<Enemy> getEnemies()
+    {
+        return enemies;
     }
     public void setOrderInLayer(int i) { sr.sortingOrder = i; }
     public void assignGridXY(int x, int y) {

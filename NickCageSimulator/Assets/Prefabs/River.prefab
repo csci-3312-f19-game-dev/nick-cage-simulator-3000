@@ -95,6 +95,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultUnit: {fileID: 5247284781865918427, guid: 53fb0a75ac0a29546adb24f714a44cee,
     type: 3}
+  defaultEnemy: {fileID: 5247284781865918427, guid: 39c2a2f2ffea8914b9e4356b939559b2,
+    type: 3}
+  typeOfTileName: 
   milliPercentChanceOfDeath: 0.13
 --- !u!60 &432099082663902162
 PolygonCollider2D:

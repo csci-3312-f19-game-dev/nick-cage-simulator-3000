@@ -54,7 +54,8 @@ public class TileHandler : MonoBehaviour
     public void deplete()
     {
         depleted = true;
-        //TODO change image
+            //TODO change image
+            MapGenerator.MG.depletedImage(typeOfTileName);
         Time.timeScale = 1;
         //StartCoroutine("ResourceRegeneration");
         StartCoroutine("ResourceRegeneration");
@@ -68,7 +69,8 @@ public class TileHandler : MonoBehaviour
 
     void replenish()
     {
-        //TODO change image
+            //TODO change image
+            MapGenerator.MG.replenishedImage(typeOfTileName);
         depleted = false;
     }
 

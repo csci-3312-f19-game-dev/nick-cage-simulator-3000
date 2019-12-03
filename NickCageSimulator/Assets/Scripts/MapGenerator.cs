@@ -19,6 +19,12 @@ public class MapGenerator : MonoBehaviour
     public GameObject cityPrefab;
     public GameObject purchasePrefab;
 
+    //TODO NEED TO ADD TO SCENE
+    public GameObject forestDepPrefab;
+    public GameObject plainsDepPrefab;
+    public GameObject mountainsDepPrefab;
+    public GameObject RiverDepPrefab;
+
     public static int width = 16; //using static cuz Random.Range needs it
     public static int height = 17;
     //private float xOffset = .448f;
@@ -104,7 +110,7 @@ public class MapGenerator : MonoBehaviour
         switch (rand)
         {
             case 0:
-                tileBeingMade = "plains";////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                tileBeingMade = "plains";
                 return plainsPrefab;
             case 1:
                 tileBeingMade = "river";
@@ -120,5 +126,53 @@ public class MapGenerator : MonoBehaviour
                 Debug.Log("in the default. something wrong");
                 return plainsPrefab;
         }
+    }
+
+    public void depletedImage(string t)
+    {
+        switch(t)
+        {
+            case "plains":
+                //set tile
+                break;
+            case "river":
+                //set tile
+                break;
+            case "forest":
+                //set tile
+                break;
+            case "stone":
+                //set tile
+                break;
+            default:
+                //set tile
+                Debug.Log("Something went wrong. In default 2");
+                break;
+        }
+
+    }
+
+    public void replenishedImage(string t)
+    {
+        switch (t)
+        {
+            case "plains":
+                //set tile
+                break;
+            case "river":
+                //set tile
+                break;
+            case "forest":
+                //set tile
+                break;
+            case "stone":
+                //set tile
+                break;
+            default:
+                //set tile
+                Debug.Log("Something went wrong. In default 3");
+                break;
+        }
+
     }
 }

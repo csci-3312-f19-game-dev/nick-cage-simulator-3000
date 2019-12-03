@@ -124,27 +124,37 @@ public class PlayerManager : MonoBehaviour
             double groupPercentChance = milliPercentChanceOfDeath - (prevTile.numUnits() * .01f);
             if (groupPercentChance < 0.01) groupPercentChance = 0.01; //has to at least have 5%
             bool resourceGotten = false;
-            while (prevTile.numUnits() > 0)
+            if (currTile.numEnemies() > 0)
             {
-                double rn = rng.NextDouble();
-                if (rn < groupPercentChance)
+                int unitsToKill = prevTile.numUnits();
+                for (int i = 0; i < unitsToKill; i++)
                 {
-                    Debug.Log(rn + " vs " + groupPercentChance);
                     prevTile.killUnit();
                 }
-                else
+            } else
+            {
+                while (prevTile.numUnits() > 0)
                 {
-                    Unit u = prevTile.grabUnit();
-                    currTile.transferUnit(u);
-                    if (!resourceGotten) //ensures you only get on food per move, rather than one food per unit
+                    double rn = rng.NextDouble();
+                    if (rn < groupPercentChance)
                     {
-                        //Add appropriate resourece to inventory
-                        resourceGotten = true;
-                        //food++;
-                        getResource();
+                        Debug.Log(rn + " vs " + groupPercentChance);
+                        prevTile.killUnit();
+                    }
+                    else
+                    {
+                        Unit u = prevTile.grabUnit();
+                        currTile.transferUnit(u);
+                        if (!resourceGotten) //ensures you only get on food per move, rather than one food per unit
+                        {
+                            //Add appropriate resourece to inventory
+                            resourceGotten = true;
+                            //food++;
+                            getResource();
+                        }
                     }
                 }
-            }
+            }            
         }
     }
             
@@ -179,18 +189,29 @@ public class PlayerManager : MonoBehaviour
         if (prevTile.numUnits() < 1) { Debug.Log("There are no units on that tile"); }
         else 
         {
-            double rn = rng.NextDouble();
-            if (rn < milliPercentChanceOfDeath)
+            if (currTile.numEnemies() > 0)
             {
-                Debug.Log(rn + " vs " + milliPercentChanceOfDeath);
+                Debug.Log("Ran into enemy");
                 PlayerManager.PM.prevTile.killUnit();
             }
             else
             {
-                Unit u = prevTile.grabUnit();
-                currTile.transferUnit(u);
-                //food++;
-                getResource();
+                double rn = rng.NextDouble();
+                Debug.Log(rn);
+                if (rn < milliPercentChanceOfDeath)
+                {
+                    Debug.Log(rn + " vs " + milliPercentChanceOfDeath);
+                    Debug.Log("Oh no, your unit from " + this.name + " has died from dysentery");
+                    PlayerManager.PM.prevTile.killUnit();
+                }
+                else
+                {
+                    Unit u = prevTile.grabUnit();
+                    currTile.transferUnit(u);
+                    //food++;
+                    getResource();
+                }
+
             }
         } 
     }

@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     int sceneCount;
     public Text endSceneText;
     public string endSceneString; //necessary because text cannot be referenced before screen holding text is loaded.
+    bool gameOver = false;
 
     void Awake()
     {
@@ -18,17 +19,30 @@ public class GameManager : MonoBehaviour
         SM = new SceneManager();
         sceneCount = 0;
         endSceneText = null;
-        endSceneString = "default text";
+        endSceneString = "default text";        
 
     //    SceneManager.LoadScene(sceneBuildIndex:0);
         DontDestroyOnLoad(GM);
-        DontDestroyOnLoad(endSceneText);
+        //DontDestroyOnLoad(endSceneText);
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        GameObject[] tiles = GameObject.FindGameObjectsWithTag("Tile");
+        int unitCount = 0;
+        foreach (GameObject tile in tiles)
+        {
+            unitCount += tile.gameObject.GetComponent<TileHandler>().numUnits();
+        }
+        if (unitCount == 0 && !gameOver)
+        {
+            gameOver = true;
+            Debug.Log("Game over");
+            //GameManager.GM.endSceneText.text = "GAME OVER.";
+            endSceneString = "GAME OVER";
+            ChangeScene();
+        }
     }
 
     public void ChangeScene()

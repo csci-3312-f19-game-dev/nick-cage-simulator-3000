@@ -9,4 +9,8 @@ public class StartScreenManager : MonoBehaviour
     {
         SceneManager.LoadScene("PlayGame", LoadSceneMode.Single);
     }
+
+    public void Instructions(){
+        SceneManager.LoadScene("Instructions", LoadSceneMode.Single);
+    }
 }

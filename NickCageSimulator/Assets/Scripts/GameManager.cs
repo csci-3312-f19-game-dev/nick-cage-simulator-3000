@@ -59,9 +59,11 @@ public class GameManager : MonoBehaviour
                 endSceneText.text = endSceneString;
             }
         }
+    }
 
-     
-
-        
+    public void RestartGame()
+    {
+        sceneCount = 0;
+        SceneManager.LoadScene(sceneBuildIndex: sceneCount);
     }
 }

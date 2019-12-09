@@ -40,18 +40,38 @@ public class GameManager : MonoBehaviour
             gameOver = true;
             Debug.Log("Game over");
             //GameManager.GM.endSceneText.text = "GAME OVER.";
-            endSceneString = "GAME OVER";
+            endSceneString = "DEFAULT STRING";
             ChangeScene();
         }
     }
 
-    public void ChangeScene()
+    public void ChangeScene() //only if player lost
     {
         sceneCount++;
 
         SceneManager.LoadScene(sceneBuildIndex: sceneCount);
 
+        endSceneString = "GAME OVER";
+
         if (sceneCount == 1) //TODO CHANGE WHEN MULTIPLE SCREENS ARE ADDED
+        {
+            //ERRORED OUT endSceneText = GameObject.FindGameObjectWithTag("endText").GetComponent<Text>();
+            if (endSceneText != null)
+            {
+                endSceneText.text = endSceneString;
+            }
+        }
+    }
+
+    public void ChangeSceneWin()
+    {
+        sceneCount += 2;
+
+        SceneManager.LoadScene(sceneBuildIndex: sceneCount);
+
+        endSceneString = "YOU WON";
+
+        if (sceneCount == 2) //TODO CHANGE WHEN MULTIPLE SCREENS ARE ADDED
         {
             //ERRORED OUT endSceneText = GameObject.FindGameObjectWithTag("endText").GetComponent<Text>();
             if (endSceneText != null)

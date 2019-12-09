@@ -1136,14 +1136,22 @@ MonoBehaviour:
     type: 3}
   cityPrefab: {fileID: 2862358635318721432, guid: d66106da3349cde4c9771934e3ea9d7c,
     type: 3}
-  forestDepPrefab: {fileID: 4533148948178513652, guid: e75cd5b08964b244cbd05abc4333cbf1,
+  forestDepPrefab: {fileID: 4533148948178513652, guid: 5ec125a101f5406498ae19a7fe8afea5,
     type: 3}
-  plainsDepPrefab: {fileID: 4533148948178513652, guid: e75cd5b08964b244cbd05abc4333cbf1,
+  plainsDepPrefab: {fileID: 3949879682865565528, guid: 2d7c359f1edf35446a752d60aa34d878,
     type: 3}
-  mountainsDepPrefab: {fileID: 4533148948178513652, guid: e75cd5b08964b244cbd05abc4333cbf1,
+  mountainsDepPrefab: {fileID: 5381555660480769746, guid: 11091b11174b3ad4bab0b9afe400c36d,
     type: 3}
-  riverDepPrefab: {fileID: 4533148948178513652, guid: e75cd5b08964b244cbd05abc4333cbf1,
+  riverDepPrefab: {fileID: 3622043014088742833, guid: 2baf232da85c3514488e5e603979115b,
     type: 3}
+  forestDepPath: 
+  plainsDepPath: 
+  mountainsDepPath: 
+  riverDepPath: 
+  forestPath: 
+  plainsPath: 
+  mountainsPath: 
+  riverPath: 
 --- !u!4 &418465697
 Transform:
   m_ObjectHideFlags: 0

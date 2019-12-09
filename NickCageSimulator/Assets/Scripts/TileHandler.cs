@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class TileHandler : MonoBehaviour
@@ -61,19 +62,19 @@ public class TileHandler : MonoBehaviour
         switch (typeOfTileName)
         {
             case "plains":
-                changeSprite(MapGenerator.MG.plainsDepPrefab);
+                changeSprite(MapGenerator.MG.plainsDepPath);
                 break;
             case "river":
-                changeSprite(MapGenerator.MG.riverDepPrefab);
+                changeSprite(MapGenerator.MG.riverDepPath);
                 break;
             case "forest":
-                changeSprite(MapGenerator.MG.forestDepPrefab);
+                changeSprite(MapGenerator.MG.forestDepPath);
                 break;
             case "stone":
-                changeSprite(MapGenerator.MG.mountainsDepPrefab);
+                changeSprite(MapGenerator.MG.mountainsDepPath);
                 break;
             default:
-                changeSprite(MapGenerator.MG.plainsDepPrefab);
+                changeSprite(MapGenerator.MG.plainsDepPath);
                 Debug.Log("Something went wrong. In default 2");
                 break;
         }
@@ -93,19 +94,19 @@ public class TileHandler : MonoBehaviour
         switch (typeOfTileName)
         {
             case "plains":
-                changeSprite(MapGenerator.MG.plainsPrefab);
+                changeSprite(MapGenerator.MG.plainsPath);
                 break;
             case "river":
-                changeSprite(MapGenerator.MG.riverPrefab);
+                changeSprite(MapGenerator.MG.riverPath);
                 break;
             case "forest":
-                changeSprite(MapGenerator.MG.forestPrefab);
+                changeSprite(MapGenerator.MG.forestPath);
                 break;
             case "stone":
-                changeSprite(MapGenerator.MG.mountainsPrefab);
+                changeSprite(MapGenerator.MG.mountainsPath);
                 break;
             default:
-                changeSprite(MapGenerator.MG.plainsPrefab);
+                changeSprite(MapGenerator.MG.plainsPath);
                 Debug.Log("Something went wrong. In default 2");
                 break;
         }
@@ -241,9 +242,10 @@ public class TileHandler : MonoBehaviour
         sr.color = new Color32(0xFF, 0xFF, 0xFF, 0xFF);
     }
 
-    public void changeSprite(GameObject g)
+    public void changeSprite(String s)
     {
         Debug.Log("inchangesprite");
         //sr.sprite = g.GetComponent<Sprite>();
+        sr.sprite = AssetDatabase.LoadAssetAtPath<Sprite>(s);
     }
 }

@@ -24,6 +24,17 @@ public class MapGenerator : MonoBehaviour
     public GameObject mountainsDepPrefab;
     public GameObject riverDepPrefab;
 
+    //String Paths of depleted sprites
+    public string forestDepPath;
+    public string plainsDepPath;
+    public string mountainsDepPath;
+    public string riverDepPath;
+
+    public string forestPath;
+    public string plainsPath;
+    public string mountainsPath;
+    public string riverPath;
+
     public static int width = 16; //using static cuz Random.Range needs it
     public static int height = 17;
     //private float xOffset = .448f;
@@ -42,7 +53,17 @@ public class MapGenerator : MonoBehaviour
 
     void Start()
     {
-        tileBeingMade = "oops";
+        forestDepPath = "Assets/Sprites/ForestDepleted.png";
+        plainsDepPath = "Assets/Sprites/PlainsDepleted.png";
+        mountainsDepPath = "Assets/Sprites/MountainDepleted.png";
+        riverDepPath = "Assets/Sprites/RiverDepleted.png";
+
+        forestPath = "Assets/Sprites/Forest.png";
+        plainsPath = "Assets/Sprites/Plains.png";
+        mountainsPath = "Assets/Sprites/Mountain.png";
+        riverPath = "Assets/Sprites/River.png";
+
+    tileBeingMade = "oops";
 
         goldX = Random.Range(0, width); 
         goldY = Random.Range(0, height);

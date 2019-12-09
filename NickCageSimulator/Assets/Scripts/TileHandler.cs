@@ -86,6 +86,7 @@ public class TileHandler : MonoBehaviour
     IEnumerator ResourceRegeneration()
     {
         yield return new WaitForSeconds(20);
+        Debug.Log("in resource regeneration...........");//////////////////////////////////////////////////
         replenish();
     }
 

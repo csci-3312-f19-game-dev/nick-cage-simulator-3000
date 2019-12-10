@@ -84,6 +84,20 @@ public class StoreManager : MonoBehaviour
         PlayerManager.StoreMenuIsOpen = !PlayerManager.StoreMenuIsOpen;
     }
 
+    public void pauseGame()
+    {
+        Debug.Log("Game pause hit");
+        if(Time.timeScale == 0)
+        {
+            Time.timeScale = 1;
+        }
+
+        else
+        {
+            Time.timeScale = 0;
+        }
+    }
+
     public static int getCurrentExchangePrice(Resource purchasing, Resource currency)
     {
         switch (purchasing)

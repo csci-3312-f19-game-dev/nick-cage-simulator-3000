@@ -49,8 +49,8 @@ public class EnemyMover : MonoBehaviour
 
             if (numEnemies > 0)
             {
-                Debug.Log("(xGrid,yGrid) = (" + xGrid + "," + yGrid + ")");
-                Debug.Log(numEnemies + " enemies");
+                //Debug.Log("(xGrid,yGrid) = (" + xGrid + "," + yGrid + ")");
+                //Debug.Log(numEnemies + " enemies");
             }
 
 
@@ -94,7 +94,7 @@ public class EnemyMover : MonoBehaviour
                         x = xGrid + 1;
                     }
                 }
-                Debug.Log("(x,y) = (" + x + "," + y + ")");
+                //Debug.Log("(x,y) = (" + x + "," + y + ")");
                 xList.Add(x);
                 yList.Add(y);
             }
@@ -105,10 +105,10 @@ public class EnemyMover : MonoBehaviour
             }                
         }
 
-        Debug.Log("units placed on:");
+        //Debug.Log("units placed on:");
         for (int i = 0; i < xList.Count; i++)
         {
-            Debug.Log("(x,y) = (" + xList[i] + "," + yList[i] + ")");
+            //Debug.Log("(x,y) = (" + xList[i] + "," + yList[i] + ")");
             foreach (GameObject tile in tiles)
             {
                 Tuple<int, int> tileXY = tile.gameObject.GetComponent<TileHandler>().getGridXY();
@@ -117,11 +117,23 @@ public class EnemyMover : MonoBehaviour
                 if (tileX == xList[i] && tileY == yList[i])
                 {
                     tile.gameObject.GetComponent<TileHandler>().addEnemy();
-                    int numUnitsToKill = tile.gameObject.GetComponent<TileHandler>().numUnits();
-                    for (int j = 0; j < numUnitsToKill; j++)
+
+                    //decide whether to kill units or enemies
+                    int numUnits = tile.gameObject.GetComponent<TileHandler>().numUnits();
+                    int numEnemies = tile.gameObject.GetComponent<TileHandler>().numEnemies();
+                    if (numUnits > numEnemies)
                     {
-                        tile.gameObject.GetComponent<TileHandler>().killUnit();
-                    }
+                        for (int j = 0; j < numEnemies; j++)
+                        {
+                            tile.gameObject.GetComponent<TileHandler>().grabEnemy();
+                        }
+                    } else
+                    {
+                        for (int j = 0; j < numUnits; j++)
+                        {
+                            tile.gameObject.GetComponent<TileHandler>().killUnit();
+                        }
+                    }                    
                 }
             }            
         }

@@ -199,6 +199,7 @@ public class TileHandler : MonoBehaviour
         units.Add(u);
         unitCount += 1;
         u.setTile(this, transform);
+        MoveUnitSound();
         if (isCityOfGold)
         {
             Debug.Log("PLAYER NEEDS TO SEE: Congrats, you have found the city of gold!");
@@ -213,6 +214,29 @@ public class TileHandler : MonoBehaviour
             {
                 Debug.Log("PLAYER NEEDS TO SEE: You need more resources to excavate the city of gold.");
             }
+        }
+    }
+
+    public void MoveUnitSound()
+    {
+        switch (typeOfTileName)
+        {
+            case "plains":
+                MusicContainer.MC.playSound(3);
+                break;
+            case "river":
+                MusicContainer.MC.playSound(10);
+                break;
+            case "forest":
+                MusicContainer.MC.playSound(11);
+                break;
+            case "stone":
+                //changeSprite(MapGenerator.MG.mountainsDepPath);
+                break;
+            default:
+                //changeSprite(MapGenerator.MG.plainsDepPath);
+                //Debug.Log("Error. In TileHandler/deplete()");
+                break;
         }
     }
 

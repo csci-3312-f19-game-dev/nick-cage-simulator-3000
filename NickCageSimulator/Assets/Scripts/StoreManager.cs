@@ -87,6 +87,7 @@ public class StoreManager : MonoBehaviour
 
     public void toggleShopMenu()
     {
+        MusicContainer.MC.playSound(0);
         StoreScreen.SetActive(!PlayerManager.StoreMenuIsOpen);
         DisplayPanel.SetActive(!PlayerManager.StoreMenuIsOpen);
         PlayerManager.StoreMenuIsOpen = !PlayerManager.StoreMenuIsOpen;

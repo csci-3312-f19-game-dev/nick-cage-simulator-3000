@@ -321,4 +321,4 @@ MonoBehaviour:
   defaultEnemy: {fileID: 5247284781865918427, guid: 39c2a2f2ffea8914b9e4356b939559b2,
     type: 3}
   typeOfTileName: 
-  milliPercentChanceOfDeath: 0.06
+  milliPercentChanceOfDeath: 0

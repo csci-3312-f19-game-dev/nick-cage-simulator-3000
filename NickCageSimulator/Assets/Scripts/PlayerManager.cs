@@ -61,10 +61,10 @@ public class PlayerManager : MonoBehaviour
     public void purchaseUnit(int price)
     {
         //Debug.Log("FOR EDITING: purchase unit");
-        if (food < price) Debug.Log("FOR USER: You don't have enough food to purchase a new unit");
+        if (food < price) JournalOutputManager.Journal.addOutput("You don't have enough food to purchase a new unit");
         else
         {
-            Debug.Log("FOR PLAYER: New unit added. Food was " + food);
+            JournalOutputManager.Journal.addOutput("New unit added. Food was " + food);
             food -= price;
             if (prevTile == null)
             {
@@ -79,7 +79,7 @@ public class PlayerManager : MonoBehaviour
 
     public void purchaseSafetyTile(int price) //MADDIE TODO: CALL FROM BUTTON CLICK
     {
-        if (stone < price) Debug.Log("PLAYER SHOULD SEE: You don't have enough stone to purchase a safety tile");
+        if (stone < price) JournalOutputManager.Journal.addOutput("You don't have enough stone to purchase a safety tile");
         else
         {
             Debug.Log("PLAYER SHOULD SEE: Safety tile purchased. Click to place");
@@ -90,7 +90,7 @@ public class PlayerManager : MonoBehaviour
     
     public void makePurchase(Resource purchasing, Resource currency)
     {
-        Debug.Log("FOR EDITING: purchase something!");
+        JournalOutputManager.Journal.addOutput("FOR EDITING: purchase something!");
         int price = StoreManager.getCurrentExchangePrice(purchasing, currency);
         if (purchasing == Resource.Units)
         {
@@ -99,7 +99,7 @@ public class PlayerManager : MonoBehaviour
                 PM.purchaseUnit(price);
                 PM.resetPM();
             }
-            else Debug.Log("FLAYER SHOULD SEE: Please select tile to place new unit on");
+            else JournalOutputManager.Journal.addOutput("Please select tile to place new unit on");
             return;
         }
         switch (currency)
@@ -109,7 +109,7 @@ public class PlayerManager : MonoBehaviour
                 if (food < price)
                 {
                     //don't have enough currency
-                    Debug.Log("PLAYER SHOULD SEE: You don't have enough food to purchase this.");
+                    JournalOutputManager.Journal.addOutput("You don't have enough food to purchase this.");
                     return;
                 }
                 else
@@ -121,7 +121,7 @@ public class PlayerManager : MonoBehaviour
                 if (stone < price)
                 {
                     //don't have enough currency
-                    Debug.Log("PLAYER SHOULD SEE:You don't have enough stone to purchase this.");
+                    JournalOutputManager.Journal.addOutput("You don't have enough stone to purchase this.");
                     return;
                 }
                 else
@@ -133,7 +133,7 @@ public class PlayerManager : MonoBehaviour
                 if (water < price)
                 {
                     //don't have enough currency
-                    Debug.Log("PLAYER SHOULD SEE:You don't have enough water to purchase this.");
+                    JournalOutputManager.Journal.addOutput("You don't have enough water to purchase this.");
                     return;
                 }
                 else
@@ -145,7 +145,7 @@ public class PlayerManager : MonoBehaviour
                 if (wood < price)
                 {
                     //don't have enough currency
-                    Debug.Log("PLAYER SHOULD SEE:You don't have enough wood to purchase this.");
+                    JournalOutputManager.Journal.addOutput("You don't have enough wood to purchase this.");
                     return;
                 }
                 else
@@ -220,7 +220,7 @@ public class PlayerManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("SHOULD PLAYER SEE? : Illegal Move");
+                JournalOutputManager.Journal.addOutput("Illegal Move");
             }
 
             resetPM();
@@ -230,7 +230,7 @@ public class PlayerManager : MonoBehaviour
     //moveUnit and moveUnits have duplicate code, but works for now.
     private void moveUnits()
     {
-        if (prevTile.numUnits() < 1) { Debug.Log("PLAYER SHOULD SEE: There are no units on that tile"); }
+        if (prevTile.numUnits() < 1) { JournalOutputManager.Journal.addOutput("There are no units on that tile"); }
         else
         {
             double groupPercentChance = milliPercentChanceOfDeath - (prevTile.numUnits() * .01f);
@@ -305,12 +305,12 @@ public class PlayerManager : MonoBehaviour
 
     private void moveUnit()
     {
-        if (prevTile.numUnits() < 1) { Debug.Log("PLAYER SHOULD SEE: There are no units on that tile"); }
+        if (prevTile.numUnits() < 1) { JournalOutputManager.Journal.addOutput("There are no units on that tile"); }
         else
         {
             if (currTile.numEnemies() > 0)
             {
-                Debug.Log("PLAYER SHOULD SEE: Ran into enemy");
+                JournalOutputManager.Journal.addOutput("Ran into enemy");
                 PlayerManager.PM.prevTile.killUnit();
             }
             else
@@ -320,7 +320,7 @@ public class PlayerManager : MonoBehaviour
                 if (rn < milliPercentChanceOfDeath)
                 {
                     Debug.Log(rn + " vs " + milliPercentChanceOfDeath);
-                    Debug.Log("PLAYER SHOULD SEE: Oh no, your unit from " + this.name + " has died from dysentery");
+                    JournalOutputManager.Journal.addOutput("Oh no, your unit from " + this.name + " has died from dysentery");
                     PlayerManager.PM.prevTile.killUnit();
                 }
                 else

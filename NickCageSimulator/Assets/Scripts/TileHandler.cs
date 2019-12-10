@@ -202,17 +202,17 @@ public class TileHandler : MonoBehaviour
         MoveUnitSound();
         if (isCityOfGold)
         {
-            Debug.Log("PLAYER NEEDS TO SEE: Congrats, you have found the city of gold!");
+            JournalOutputManager.Journal.addOutput("Congrats, you have found the city of gold!");
             displayCityOfGold();
             
             if (unitCount >= PlayerManager.PM.unitsToWin && PlayerManager.PM.stone >= PlayerManager.PM.stoneToWin && PlayerManager.PM.water >= PlayerManager.PM.waterToWin && PlayerManager.PM.wood >= PlayerManager.PM.woodToWin) {
-                Debug.Log("PLAYER NEEDS TO SEE: Congrats, you have successfully excavated the city of gold!");                
+                JournalOutputManager.Journal.addOutput("Congrats, you have successfully excavated the city of gold!");                
                 GameManager.GM.endSceneString = "You Won!";
                 GameManager.GM.ChangeScene();
             }
             else
             {
-                Debug.Log("PLAYER NEEDS TO SEE: You need more resources to excavate the city of gold.");
+                JournalOutputManager.Journal.addOutput("You need more resources to excavate the city of gold.");
             }
         }
     }

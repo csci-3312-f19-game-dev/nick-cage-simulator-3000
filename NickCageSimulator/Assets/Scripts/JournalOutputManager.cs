@@ -19,6 +19,11 @@ public class JournalOutputManager : MonoBehaviour
     public Text line12;
     private string[] outputs;
     private int numOutputs;
+    public static JournalOutputManager Journal;
+    private void Awake()
+    {
+        Journal = this;
+    }
     // Start is called before the first frame update
     void Start()
     {

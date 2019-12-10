@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
         if (unitCount == 0 && !gameOver)
         {
             gameOver = true;
-            Debug.Log("Game over");
+            JournalOutputManager.Journal.addOutput("Game over");
             endSceneString = "DEFAULT STRING";
             ChangeScene();
         }

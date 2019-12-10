@@ -98,7 +98,7 @@ MonoBehaviour:
   defaultEnemy: {fileID: 5247284781865918427, guid: 39c2a2f2ffea8914b9e4356b939559b2,
     type: 3}
   typeOfTileName: 
-  milliPercentChanceOfDeath: 0.13
+  milliPercentChanceOfDeath: 0
 --- !u!60 &1914954406414153849
 PolygonCollider2D:
   m_ObjectHideFlags: 0

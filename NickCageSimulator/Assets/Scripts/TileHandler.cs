@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+//The purpose of this class is to handle tile information for each instance
 public class TileHandler : MonoBehaviour
 {
     private SpriteRenderer sr;

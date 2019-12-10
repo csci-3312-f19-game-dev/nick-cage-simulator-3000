@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+
+//The purpose of this class is to trigger purchase request from the button
 public class StorePurchaseHandler : MonoBehaviour
 {
     public Resource currency;

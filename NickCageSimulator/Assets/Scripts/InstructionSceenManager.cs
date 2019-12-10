@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+
+//The purpose of this class is to navigate the instruction screens
 
 public class InstructionSceenManager : MonoBehaviour
 {
-    // Start is called before the first frame update
     public GameObject ScreenOne;
     public GameObject ScreenTwo;
     public GameObject ScreenThree;
@@ -77,7 +76,6 @@ public class InstructionSceenManager : MonoBehaviour
         screens[currentScreen].SetActive(true);
     }
 
-    // Update is called once per frame
     void Update()
     {
 

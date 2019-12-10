@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+//The purpose of this class is to handle user interaction and track user assets
 
 public class PlayerManager : MonoBehaviour
 {
@@ -16,7 +16,7 @@ public class PlayerManager : MonoBehaviour
     //Managing tiles clicked
     public TileHandler prevTile;
     public TileHandler currTile;
-    public TileHandler lastClickedTile;//for store/unit spawning purposes
+    public TileHandler lastClickedTile; //for store/unit spawning purposes
     public bool isTileClicked = false;
 
     //Resources
@@ -32,7 +32,6 @@ public class PlayerManager : MonoBehaviour
     public int waterToWin = 6;
     public int woodToWin = 6;
 
-
     //Logic
     //Unity has a UnityEngine.Random which cannont generate random numbers,
     //must speicify System.Random
@@ -41,7 +40,6 @@ public class PlayerManager : MonoBehaviour
 
     /* Unity-specific functions */
 
-    // Start is called before the first frame update
     void Start()
     {
         int cont = 0;
@@ -54,7 +52,6 @@ public class PlayerManager : MonoBehaviour
         Debug.Log("count " + cont);
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -63,15 +60,15 @@ public class PlayerManager : MonoBehaviour
     /* Our functions */
     public void purchaseUnit(int price)
     {
-        //Debug.Log("purchase unit");
-        if (food < price) Debug.Log("You don't have enough food to purchase a new unit");
+        //Debug.Log("FOR EDITING: purchase unit");
+        if (food < price) Debug.Log("FOR USER: You don't have enough food to purchase a new unit");
         else
         {
-            Debug.Log("New unit added. Food was " + food);
+            Debug.Log("FOR PLAYER: New unit added. Food was " + food);
             food -= price;
             if (prevTile == null)
             {
-                lastClickedTile.addUnit();//compkains this is null whenclicedafter one move
+                lastClickedTile.addUnit();//complains this is null when clicked after one move ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             }
             else
             {
@@ -82,29 +79,27 @@ public class PlayerManager : MonoBehaviour
 
     public void purchaseSafetyTile(int price) //MADDIE TODO: CALL FROM BUTTON CLICK
     {
-        if (stone < price) Debug.Log("You don't have enough stone to purchase a safety tile");
+        if (stone < price) Debug.Log("PLAYER SHOULD SEE: You don't have enough stone to purchase a safety tile");
         else
         {
-            Debug.Log("Safety tile purchased. Click to place");
+            Debug.Log("PLAYER SHOULD SEE: Safety tile purchased. Click to place");
             stone -= price;
             StoreManager.SM.placingTilesMode(); //enter placing tiles mode
         }
     }
-
-
+    
     public void makePurchase(Resource purchasing, Resource currency)
     {
-        Debug.Log("purchase something!");
+        Debug.Log("FOR EDITING: purchase something!");
         int price = StoreManager.getCurrentExchangePrice(purchasing, currency);
         if (purchasing == Resource.Units)
         {
-            //Debug.Log("purchase unit!");
             if (PM.prevTile != null)
             {
                 PM.purchaseUnit(price);
                 PM.resetPM();
             }
-            else Debug.Log("Please select tile to place new unit on");
+            else Debug.Log("FLAYER SHOULD SEE: Please select tile to place new unit on");
             return;
         }
         switch (currency)
@@ -114,7 +109,7 @@ public class PlayerManager : MonoBehaviour
                 if (food < price)
                 {
                     //don't have enough currency
-                    Debug.Log("You don't have enough food to purchase this.");
+                    Debug.Log("PLAYER SHOULD SEE: You don't have enough food to purchase this.");
                     return;
                 }
                 else
@@ -126,7 +121,7 @@ public class PlayerManager : MonoBehaviour
                 if (stone < price)
                 {
                     //don't have enough currency
-                    Debug.Log("You don't have enough stone to purchase this.");
+                    Debug.Log("PLAYER SHOULD SEE:You don't have enough stone to purchase this.");
                     return;
                 }
                 else
@@ -138,7 +133,7 @@ public class PlayerManager : MonoBehaviour
                 if (water < price)
                 {
                     //don't have enough currency
-                    Debug.Log("You don't have enough water to purchase this.");
+                    Debug.Log("PLAYER SHOULD SEE:You don't have enough water to purchase this.");
                     return;
                 }
                 else
@@ -150,7 +145,7 @@ public class PlayerManager : MonoBehaviour
                 if (wood < price)
                 {
                     //don't have enough currency
-                    Debug.Log("You don't have enough wood to purchase this.");
+                    Debug.Log("PLAYER SHOULD SEE:You don't have enough wood to purchase this.");
                     return;
                 }
                 else
@@ -159,7 +154,7 @@ public class PlayerManager : MonoBehaviour
                 }
                 break;
             default:
-                Debug.Log("Currency Error");
+                Debug.Log("EDITOR: Currency Error in PlayerManager/makePurchase()");
                 return;
         }
 
@@ -191,7 +186,6 @@ public class PlayerManager : MonoBehaviour
         if (StoreManager.SM.currentlyPlacingBoughtTiles == true)
         {
             tile.makeSafetyTile();
-            //TODO KAYLEE ADD 5 s DELAY HERE?
             StoreManager.SM.placingTilesMode(); //Exit placing tiles mode
             return;
         }
@@ -226,7 +220,7 @@ public class PlayerManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("Illegal Move");
+                Debug.Log("SHOULD PLAYER SEE? : Illegal Move");
             }
 
             resetPM();
@@ -236,7 +230,7 @@ public class PlayerManager : MonoBehaviour
     //moveUnit and moveUnits have duplicate code, but works for now.
     private void moveUnits()
     {
-        if (prevTile.numUnits() < 1) { Debug.Log("There are no units on that tile"); }
+        if (prevTile.numUnits() < 1) { Debug.Log("PLAYER SHOULD SEE: There are no units on that tile"); }
         else
         {
             double groupPercentChance = milliPercentChanceOfDeath - (prevTile.numUnits() * .01f);
@@ -275,7 +269,6 @@ public class PlayerManager : MonoBehaviour
                         {
                             //Add appropriate resourece to inventory
                             resourceGotten = true;
-                            //food++;
                             getResource();
                         }
                     }
@@ -312,12 +305,12 @@ public class PlayerManager : MonoBehaviour
 
     private void moveUnit()
     {
-        if (prevTile.numUnits() < 1) { Debug.Log("There are no units on that tile"); }
+        if (prevTile.numUnits() < 1) { Debug.Log("PLAYER SHOULD SEE: There are no units on that tile"); }
         else
         {
             if (currTile.numEnemies() > 0)
             {
-                Debug.Log("Ran into enemy");
+                Debug.Log("PLAYER SHOULD SEE: Ran into enemy");
                 PlayerManager.PM.prevTile.killUnit();
             }
             else
@@ -327,14 +320,13 @@ public class PlayerManager : MonoBehaviour
                 if (rn < milliPercentChanceOfDeath)
                 {
                     Debug.Log(rn + " vs " + milliPercentChanceOfDeath);
-                    Debug.Log("Oh no, your unit from " + this.name + " has died from dysentery");
+                    Debug.Log("PLAYER SHOULD SEE: Oh no, your unit from " + this.name + " has died from dysentery");
                     PlayerManager.PM.prevTile.killUnit();
                 }
                 else
                 {
                     Unit u = prevTile.grabUnit();
                     currTile.transferUnit(u);
-                    //food++;
                     getResource();
                 }
 

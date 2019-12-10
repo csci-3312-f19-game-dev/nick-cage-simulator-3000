@@ -1,9 +1,8 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 using UnityEngine.UI;
-using System.Threading;
+
+//The purpose of this class is to track time for the day counter on the bottom menu.
 
 public class DayCounter : MonoBehaviour
 {
@@ -22,14 +21,13 @@ public class DayCounter : MonoBehaviour
         dayDisplay.text = ("Day " + day);
     }
 
-    //Will run independent of everything else... I think?
-    IEnumerator UpdateDay()
+    
+    IEnumerator UpdateDay() //Will run independent of everything else
     {
         while (true)
         {
             yield return new WaitForSeconds(5);
             day++;
-            //Debug.Log("Just added a day");
         }
     }
 }

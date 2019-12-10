@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
+//The purpose of this class is to display the start scene.
 public class StartScreenManager : MonoBehaviour
 {
     public void playGame()

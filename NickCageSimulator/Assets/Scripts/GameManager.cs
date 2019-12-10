@@ -1,8 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+
+//The purpose of this class is to facilitate the switching of scenes
 
 public class GameManager : MonoBehaviour
 {
@@ -20,13 +20,9 @@ public class GameManager : MonoBehaviour
         sceneCount = 0;
         endSceneText = null;
         endSceneString = "default text";        
-
-    //    SceneManager.LoadScene(sceneBuildIndex:0);
         DontDestroyOnLoad(GM);
-        //DontDestroyOnLoad(endSceneText);
     }
 
-    // Update is called once per frame
     void Update()
     {
         GameObject[] tiles = GameObject.FindGameObjectsWithTag("Tile");
@@ -39,23 +35,20 @@ public class GameManager : MonoBehaviour
         {
             gameOver = true;
             Debug.Log("Game over");
-            //GameManager.GM.endSceneText.text = "GAME OVER.";
             endSceneString = "DEFAULT STRING";
             ChangeScene();
         }
     }
 
+    //Change to next scene in order
     public void ChangeScene() //only if player lost
     {
         sceneCount++;
-
         SceneManager.LoadScene(sceneBuildIndex: sceneCount);
-
         endSceneString = "GAME OVER";
 
         if (sceneCount == 1) //TODO CHANGE WHEN MULTIPLE SCREENS ARE ADDED
         {
-            //ERRORED OUT endSceneText = GameObject.FindGameObjectWithTag("endText").GetComponent<Text>();
             if (endSceneText != null)
             {
                 endSceneText.text = endSceneString;
@@ -63,6 +56,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //Change to End/Win scene. Necessary because this skips the End/Lose scene in the sequence
     public void ChangeSceneWin()
     {
         sceneCount += 2;
@@ -73,7 +67,6 @@ public class GameManager : MonoBehaviour
 
         if (sceneCount == 2) //TODO CHANGE WHEN MULTIPLE SCREENS ARE ADDED
         {
-            //ERRORED OUT endSceneText = GameObject.FindGameObjectWithTag("endText").GetComponent<Text>();
             if (endSceneText != null)
             {
                 endSceneText.text = endSceneString;
@@ -81,6 +74,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //Restart the game from gameplay scene from either end scene
     public void RestartGame()
     {
         sceneCount = 0;

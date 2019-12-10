@@ -90,16 +90,17 @@ public class PlayerManager : MonoBehaviour
     
     public void makePurchase(Resource purchasing, Resource currency)
     {
-        JournalOutputManager.Journal.addOutput("FOR EDITING: purchase something!");
         int price = StoreManager.getCurrentExchangePrice(purchasing, currency);
         if (purchasing == Resource.Units)
         {
             if (PM.prevTile != null)
             {
+                JournalOutputManager.Journal.addOutput("Purchased something!");
+
                 PM.purchaseUnit(price);
                 PM.resetPM();
             }
-            else JournalOutputManager.Journal.addOutput("Please select tile to place new unit on");
+            else JournalOutputManager.Journal.addOutput("Before purchasing, please select tile to place new unit on");
             return;
         }
         switch (currency)
@@ -114,6 +115,8 @@ public class PlayerManager : MonoBehaviour
                 }
                 else
                 {
+                    JournalOutputManager.Journal.addOutput("Purchased something!");
+
                     food -= price;
                 }
                 break;
@@ -126,6 +129,8 @@ public class PlayerManager : MonoBehaviour
                 }
                 else
                 {
+                    JournalOutputManager.Journal.addOutput("Purchased something!");
+
                     stone -= price;
                 }
                 break;
@@ -138,6 +143,8 @@ public class PlayerManager : MonoBehaviour
                 }
                 else
                 {
+                    JournalOutputManager.Journal.addOutput("Purchased something!");
+
                     water -= price;
                 }
                 break;
@@ -150,6 +157,8 @@ public class PlayerManager : MonoBehaviour
                 }
                 else
                 {
+                    JournalOutputManager.Journal.addOutput("Purchased something!");
+
                     wood -= price;
                 }
                 break;

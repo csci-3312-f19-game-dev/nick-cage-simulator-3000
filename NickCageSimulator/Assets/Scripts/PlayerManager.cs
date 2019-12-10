@@ -27,7 +27,11 @@ public class PlayerManager : MonoBehaviour
     public int moveCount = 0;
 
     //Winning stuff
-    public int unitsToWin = 10;
+    public int unitsToWin = 1;
+    public int stoneToWin = 6;
+    public int waterToWin = 6;
+    public int woodToWin = 6;
+
 
     //Logic
     //Unity has a UnityEngine.Random which cannont generate random numbers,
@@ -59,6 +63,7 @@ public class PlayerManager : MonoBehaviour
     /* Our functions */
     public void purchaseUnit(int price)
     {
+        //Debug.Log("purchase unit");
         if (food < price) Debug.Log("You don't have enough food to purchase a new unit");
         else
         {
@@ -75,22 +80,13 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public void purchaseSafetyTile(int price) //MADDIE TODO: CALL FROM BUTTON CLICK
-    {
-        if (stone < price) Debug.Log("You don't have enough stone to purchase a safety tile");
-        else
-        {
-            Debug.Log("Safety tile purchased. Click to place");
-            stone -= price;
-            StoreManager.SM.placingTilesMode(); //enter placing tiles mode
-        }
-    }
-
     public void makePurchase(Resource purchasing, Resource currency)
     {
+        Debug.Log("purchase something!");
         int price = StoreManager.getCurrentExchangePrice(purchasing, currency);
         if (purchasing == Resource.Units)
         {
+            //Debug.Log("purchase unit!");
             if (PM.prevTile != null)
             {
                 PM.purchaseUnit(price);
@@ -176,19 +172,7 @@ public class PlayerManager : MonoBehaviour
 
     public void tileClicked(TileHandler tile, bool shiftDown)
     {
-        //Menu is open, disable tiles
         if (StoreMenuIsOpen) return;
-
-        //Must click tile to assign safety tile. Menu is temporarily minimized
-        if(StoreManager.SM.currentlyPlacingBoughtTiles == true)
-        {
-            tile.makeSafetyTile();
-            //TODO KAYLEE ADD 5 s DELAY HERE?
-            StoreManager.SM.placingTilesMode(); //Exit placing tiles mode
-            return;
-        }
-
-        //Click is for movement
         if (!isTileClicked)
         {
             prevTile = tile;
@@ -234,8 +218,9 @@ public class PlayerManager : MonoBehaviour
             double groupPercentChance = milliPercentChanceOfDeath - (prevTile.numUnits() * .01f);
             if (groupPercentChance < 0.01) groupPercentChance = 0.01; //has to at least have 5%
             bool resourceGotten = false;
-            if (currTile.numEnemies() > 0)
+            if (currTile.numEnemies() >= prevTile.numUnits())
             {
+                //more enemies than units; kill the units
                 int unitsToKill = prevTile.numUnits();
                 for (int i = 0; i < unitsToKill; i++)
                 {
@@ -244,6 +229,12 @@ public class PlayerManager : MonoBehaviour
             }
             else
             {
+                //more units than enemies; kill the enemies
+                int enemiesToKill = prevTile.numEnemies();
+                for (int i = 0; i < enemiesToKill; i++)
+                {
+                    prevTile.grabEnemy();
+                }
                 while (prevTile.numUnits() > 0)
                 {
                     double rn = rng.NextDouble();

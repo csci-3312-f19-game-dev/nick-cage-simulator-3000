@@ -56,8 +56,6 @@ public class TileHandler : MonoBehaviour
     {
         Debug.Log("IN DEPLETED");
         depleted = true;
-        //TODO change image
-        // MapGenerator.MG.depletedImage(typeOfTileName);
 
         if (!isCityOfGold)
         {
@@ -89,7 +87,7 @@ public class TileHandler : MonoBehaviour
     IEnumerator ResourceRegeneration()
     {
         yield return new WaitForSeconds(20);
-        Debug.Log("in resource regeneration...........");//////////////////////////////////////////////////
+        Debug.Log("in resource regeneration...........");
         if (!isCityOfGold) replenish();
     }
 
@@ -121,6 +119,13 @@ public class TileHandler : MonoBehaviour
     {
         return depleted;
     }
+
+    public void makeSafetyTile()
+    {
+        depleted = true;
+        changeSprite(MapGenerator.MG.safetySprite);
+    }
+
 
     void OnMouseOver()
     {

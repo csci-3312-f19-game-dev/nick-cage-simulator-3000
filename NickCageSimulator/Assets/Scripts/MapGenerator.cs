@@ -35,6 +35,8 @@ public class MapGenerator : MonoBehaviour
     public string mountainsPath;
     public string riverPath;
 
+    public string safetySprite;
+
     public static int width = 16; //using static cuz Random.Range needs it
     public static int height = 17;
     //private float xOffset = .448f;
@@ -63,7 +65,15 @@ public class MapGenerator : MonoBehaviour
         mountainsPath = "Assets/Sprites/Mountain.png";
         riverPath = "Assets/Sprites/River.png";
 
-    tileBeingMade = "oops";
+        //MADDIE TODO: put path to sprite asset here
+        //safetySprite = "Assets/Sprites/.............."
+
+        //DELETE ME, MADDIE
+        safetySprite = "Assets/Sprites/CityOfGold.png"; //PLACEHOLDER ONLY /////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+        tileBeingMade = "oops";
 
         goldX = 2;
         goldY = 2;

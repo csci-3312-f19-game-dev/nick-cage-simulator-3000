@@ -65,13 +65,7 @@ public class MapGenerator : MonoBehaviour
         mountainsPath = "Assets/Sprites/Mountain.png";
         riverPath = "Assets/Sprites/River.png";
 
-        //MADDIE TODO: put path to sprite asset here
-        //safetySprite = "Assets/Sprites/.............."
-
-        //DELETE ME, MADDIE
-        safetySprite = "Assets/Sprites/CityOfGold.png"; //PLACEHOLDER ONLY /////////////////////////////////////////////////////////////////////////////////////////////////
-
-
+        safetySprite = "Assets/Sprites/SafetyTile";
 
         tileBeingMade = "oops";
 
@@ -153,7 +147,7 @@ public class MapGenerator : MonoBehaviour
                 return mountainsPrefab;
             default:
                 tileBeingMade = "plains";
-                Debug.Log("in the default. something wrong");
+                Debug.Log("ERROR: In MapGenerator/generateRandomBiomeTile()");
                 return plainsPrefab;
         }
     }

@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using System.Threading;
 public class StoreManager : MonoBehaviour
 {
+    public static StoreManager SM;
+
     public GameObject StoreScreen;
     public GameObject DisplayPanel;
     public Text WoodToFoodDisplay;
@@ -33,9 +35,14 @@ public class StoreManager : MonoBehaviour
     public static int WoodToWaterPrice;
     public static int StoneToWaterPrice;
     public static int FoodToUnitsPrice;
+    public static int StoneToSafetyTilePrice;
+
+    public bool currentlyPlacingBoughtTiles;
+
     // Start is called before the first frame update
     void Start()
     {
+        SM = this;
         StoreScreen.SetActive(false);
         DisplayPanel.SetActive(false);
         PlayerManager.StoreMenuIsOpen = false;
@@ -52,6 +59,10 @@ public class StoreManager : MonoBehaviour
         WoodToWaterPrice = 2;
         StoneToWaterPrice = 2;
         FoodToUnitsPrice = 5;
+        StoneToSafetyTilePrice = 5;
+
+        currentlyPlacingBoughtTiles = false;
+
         updatePriceDisplays();
     }
 
@@ -82,6 +93,13 @@ public class StoreManager : MonoBehaviour
         StoreScreen.SetActive(!PlayerManager.StoreMenuIsOpen);
         DisplayPanel.SetActive(!PlayerManager.StoreMenuIsOpen);
         PlayerManager.StoreMenuIsOpen = !PlayerManager.StoreMenuIsOpen;
+    }
+
+    public void placingTilesMode() //TODO MADDIE: Call this method from wherever the safety tile purchase button is, then call again when safety tile is placed
+    {
+        StoreScreen.SetActive(!PlayerManager.StoreMenuIsOpen);
+        DisplayPanel.SetActive(!PlayerManager.StoreMenuIsOpen);
+        currentlyPlacingBoughtTiles = !currentlyPlacingBoughtTiles;
     }
 
     public void pauseGame()
@@ -144,6 +162,16 @@ public class StoreManager : MonoBehaviour
                         break;
                 }
                 break;
+            case Resource.SafetyTile:
+                switch (currency)
+                {
+                    case Resource.Stone:
+                        return StoneToSafetyTilePrice;
+                        break;
+                    default:
+                        break;
+                }
+                break;
             case Resource.Water:
                 switch (currency)
                 {
@@ -188,5 +216,6 @@ public enum Resource
     Food,
     Water,
     Units,
-    Stone
+    Stone,
+    SafetyTile
 }

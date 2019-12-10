@@ -75,6 +75,17 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    public void purchaseSafetyTile(int price) //MADDIE TODO: CALL FROM BUTTON CLICK
+    {
+        if (stone < price) Debug.Log("You don't have enough stone to purchase a safety tile");
+        else
+        {
+            Debug.Log("Safety tile purchased. Click to place");
+            stone -= price;
+            StoreManager.SM.placingTilesMode(); //enter placing tiles mode
+        }
+    }
+
     public void makePurchase(Resource purchasing, Resource currency)
     {
         int price = StoreManager.getCurrentExchangePrice(purchasing, currency);
@@ -165,7 +176,19 @@ public class PlayerManager : MonoBehaviour
 
     public void tileClicked(TileHandler tile, bool shiftDown)
     {
+        //Menu is open, disable tiles
         if (StoreMenuIsOpen) return;
+
+        //Must click tile to assign safety tile. Menu is temporarily minimized
+        if(StoreManager.SM.currentlyPlacingBoughtTiles == true)
+        {
+            tile.makeSafetyTile();
+            //TODO KAYLEE ADD 5 s DELAY HERE?
+            StoreManager.SM.placingTilesMode(); //Exit placing tiles mode
+            return;
+        }
+
+        //Click is for movement
         if (!isTileClicked)
         {
             prevTile = tile;

@@ -59,25 +59,28 @@ public class TileHandler : MonoBehaviour
         //TODO change image
         // MapGenerator.MG.depletedImage(typeOfTileName);
 
-        switch (typeOfTileName)
+        if (!isCityOfGold)
         {
-            case "plains":
-                changeSprite(MapGenerator.MG.plainsDepPath);
-                break;
-            case "river":
-                changeSprite(MapGenerator.MG.riverDepPath);
-                break;
-            case "forest":
-                changeSprite(MapGenerator.MG.forestDepPath);
-                break;
-            case "stone":
-                changeSprite(MapGenerator.MG.mountainsDepPath);
-                break;
-            default:
-                changeSprite(MapGenerator.MG.plainsDepPath);
-                Debug.Log("Something went wrong. In default 2");
-                break;
-        }
+            switch (typeOfTileName)
+            {
+                case "plains":
+                    changeSprite(MapGenerator.MG.plainsDepPath);
+                    break;
+                case "river":
+                    changeSprite(MapGenerator.MG.riverDepPath);
+                    break;
+                case "forest":
+                    changeSprite(MapGenerator.MG.forestDepPath);
+                    break;
+                case "stone":
+                    changeSprite(MapGenerator.MG.mountainsDepPath);
+                    break;
+                default:
+                    changeSprite(MapGenerator.MG.plainsDepPath);
+                    Debug.Log("Something went wrong. In default 2");
+                    break;
+            }
+        }       
 
         Time.timeScale = 1;
         StartCoroutine("ResourceRegeneration");
@@ -87,7 +90,7 @@ public class TileHandler : MonoBehaviour
     {
         yield return new WaitForSeconds(20);
         Debug.Log("in resource regeneration...........");//////////////////////////////////////////////////
-        replenish();
+        if (!isCityOfGold) replenish();
     }
 
     void replenish()
@@ -181,6 +184,7 @@ public class TileHandler : MonoBehaviour
 
     public void transferUnit(Unit u)
     {
+        Debug.Log("transferring unit");
         units.Add(u);
         unitCount += 1;
         u.setTile(this, transform);
@@ -188,11 +192,18 @@ public class TileHandler : MonoBehaviour
         {
             Debug.Log("Congrats, you have found the city of gold!");
             displayCityOfGold();
-            //MOVE INTO WIN STATE BELOW, EVENTUALLY
+            
+            if (unitCount >= PlayerManager.PM.unitsToWin && PlayerManager.PM.stone >= PlayerManager.PM.stoneToWin && PlayerManager.PM.water >= PlayerManager.PM.waterToWin && PlayerManager.PM.wood >= PlayerManager.PM.woodToWin) {
+                //MOVE INTO WIN STATE BELOW, EVENTUALLY
+                Debug.Log("Congrats, you have successfully excavated the city of gold!");                
                 //GameManager.GM.endSceneText.text = "You Won!";
                 GameManager.GM.endSceneString = "You Won!";
                 GameManager.GM.ChangeScene();
-            if (unitCount >= PlayerManager.PM.unitsToWin) Debug.Log("Congrats, you have successfully excavated the city of gold!");
+            }
+            else
+            {
+                Debug.Log("You need more resources to excavate the city of gold.");
+            }
         }
     }
 

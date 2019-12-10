@@ -65,8 +65,10 @@ public class MapGenerator : MonoBehaviour
 
     tileBeingMade = "oops";
 
-        goldX = Random.Range(0, width); 
-        goldY = Random.Range(0, height);
+        goldX = 2;
+        goldY = 2;
+        //goldX = Random.Range(0, width); 
+        //goldY = Random.Range(0, height);
         Debug.Log("City of gold: " + goldX + ", " + goldY);
 
         for (int x=0; x<width; x++)
@@ -104,7 +106,7 @@ public class MapGenerator : MonoBehaviour
                     th.addEnemy();
                     th.addEnemy();
                 }*/
-               if (rng.NextDouble() < .1)
+               if ( rng.NextDouble() < .07 && !(x == 0 && y == 0) )
                 {
                     th.addEnemy();
                 }

@@ -3741,6 +3741,11 @@ PrefabInstance:
       propertyPath: food
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 4778211038192184243, guid: 99ca06e65a04f664ca2a3ef3dca119b9,
+        type: 3}
+      propertyPath: unitsToWin
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 99ca06e65a04f664ca2a3ef3dca119b9, type: 3}
 --- !u!1 &1403083884

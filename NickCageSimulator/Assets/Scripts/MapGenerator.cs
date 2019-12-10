@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+
+//The purpose of this class is to create tiles and hold static sprite information
 
 public class MapGenerator : MonoBehaviour
 {
@@ -11,6 +11,7 @@ public class MapGenerator : MonoBehaviour
         MG = this;
     }
 
+    //For use in creating the original tiles
     public GameObject hexPrefab;
     public GameObject plainsPrefab;
     public GameObject forestPrefab;
@@ -18,13 +19,7 @@ public class MapGenerator : MonoBehaviour
     public GameObject riverPrefab;
     public GameObject cityPrefab;
 
-    //TODO NEED TO ADD TO SCENE
-    public GameObject forestDepPrefab;
-    public GameObject plainsDepPrefab;
-    public GameObject mountainsDepPrefab;
-    public GameObject riverDepPrefab;
-
-    //String Paths of depleted sprites
+    //String Paths of sprites
     public string forestDepPath;
     public string plainsDepPath;
     public string mountainsDepPath;
@@ -37,6 +32,7 @@ public class MapGenerator : MonoBehaviour
 
     public string safetySprite;
 
+    //Coordinates and offsets
     public static int width = 16; //using static cuz Random.Range needs it
     public static int height = 17;
     //private float xOffset = .448f;
@@ -65,13 +61,7 @@ public class MapGenerator : MonoBehaviour
         mountainsPath = "Assets/Sprites/Mountain.png";
         riverPath = "Assets/Sprites/River.png";
 
-        //MADDIE TODO: put path to sprite asset here
-        //safetySprite = "Assets/Sprites/.............."
-
-        //DELETE ME, MADDIE
-        safetySprite = "Assets/Sprites/CityOfGold.png"; //PLACEHOLDER ONLY /////////////////////////////////////////////////////////////////////////////////////////////////
-
-
+        safetySprite = "Assets/Sprites/SafetyTile";
 
         tileBeingMade = "oops";
 
@@ -79,7 +69,7 @@ public class MapGenerator : MonoBehaviour
         goldY = 2;
         //goldX = Random.Range(0, width); 
         //goldY = Random.Range(0, height);
-        Debug.Log("City of gold: " + goldX + ", " + goldY);
+        Debug.Log("FOR EDITOR ONLY: City of gold: " + goldX + ", " + goldY);
 
         for (int x=0; x<width; x++)
         {
@@ -91,20 +81,18 @@ public class MapGenerator : MonoBehaviour
                 //GameObject temp = Instantiate(hexPrefab, new Vector3(xPos, y * yOffset, 0), Quaternion.identity);
                 var tileType = generateRandomBiomeTile();
 
-
-
                 GameObject temp = Instantiate(tileType, new Vector3(xPos - mapOffestX, (y * yOffset) - mapOffestY, 0), Quaternion.identity);
                 temp.gameObject.tag = "Tile";
                 temp.name = temp.name.Substring(0,3) + x + "_" + y;
                 TileHandler th = temp.GetComponent<TileHandler>();
-                th.typeOfTileName = tileBeingMade;//tell tile what its type is
+                th.typeOfTileName = tileBeingMade; //tell tile what its type is
                 th.assignGridXY(x, y);
                 th.setOrderInLayer(height - y); 
                 if (y == goldY && x == goldX)
                 { 
                     th.setAsCityOfGold();
                 }
-                //Temporary, need to remove this before pushing
+                //Temporary, need to remove this before pushing //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 //y==x just as arbitraty way to add random units
                // if (y==x) th.addUnit();
                if(x == 0 && y == 0)
@@ -123,10 +111,8 @@ public class MapGenerator : MonoBehaviour
 
             }
         }
-
     }
 
-    // Update is called once per frame
     void Update()
     {
         
@@ -153,7 +139,7 @@ public class MapGenerator : MonoBehaviour
                 return mountainsPrefab;
             default:
                 tileBeingMade = "plains";
-                Debug.Log("in the default. something wrong");
+                Debug.Log("ERROR: In MapGenerator/generateRandomBiomeTile()");
                 return plainsPrefab;
         }
     }

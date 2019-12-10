@@ -4,17 +4,17 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+//The purpose of this class is to handle tile information for each instance
 public class TileHandler : MonoBehaviour
 {
-
     private SpriteRenderer sr;
     private int unitCount = 0; //Each tile starts out with no units
     private List<Unit> units = new List<Unit>();
-    private int enemyCount = 0; //Each tile starts out with no anemonies
+    private int enemyCount = 0; //Each tile starts out with no enemies
     private List<Enemy> enemies = new List<Enemy>();
     public GameObject defaultUnit;
     public GameObject defaultEnemy;
-    public String typeOfTileName;
+    public string typeOfTileName;
     private bool depleted;
     private float currTime = 0;
     private float enemyMoveRate = 5f;
@@ -40,21 +40,19 @@ public class TileHandler : MonoBehaviour
         prevTime0 = Time.time;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
 
     }
 
-    // Update is called once per frame
     void Update()
     {
 
     }
 
+    //Temporarily deplete a tile of its resources
     public void deplete()
     {
-        Debug.Log("IN DEPLETED");
         depleted = true;
 
         if (!isCityOfGold)
@@ -75,7 +73,7 @@ public class TileHandler : MonoBehaviour
                     break;
                 default:
                     changeSprite(MapGenerator.MG.plainsDepPath);
-                    Debug.Log("Something went wrong. In default 2");
+                    Debug.Log("Error. In TileHandler/deplete()");
                     break;
             }
         }       
@@ -84,13 +82,14 @@ public class TileHandler : MonoBehaviour
         StartCoroutine("ResourceRegeneration");
     }
 
+    //Add delay between depletion and regeneration
     IEnumerator ResourceRegeneration()
     {
         yield return new WaitForSeconds(20);
-        Debug.Log("in resource regeneration...........");
         if (!isCityOfGold) replenish();
     }
 
+    //Regenerate tile resources
     void replenish()
     {
         switch (typeOfTileName)
@@ -109,24 +108,26 @@ public class TileHandler : MonoBehaviour
                 break;
             default:
                 changeSprite(MapGenerator.MG.plainsPath);
-                Debug.Log("Something went wrong. In default 2");
+                Debug.Log("Error. In TileHandler/replenish()");
                 break;
         }
         depleted = false;
     }
 
+    //Tells whether or not this tile is depleted
     public bool isDepleted()
     {
         return depleted;
     }
 
+    //Transition tile to safety tile
     public void makeSafetyTile()
     {
         depleted = true;
         changeSprite(MapGenerator.MG.safetySprite);
     }
 
-
+    //Handle mouse input for tiles
     void OnMouseOver()
     {
         if (Input.GetMouseButtonDown(0))
@@ -143,18 +144,19 @@ public class TileHandler : MonoBehaviour
         }
     }
     
-    /* Our functions */
-
+    //Tells if this tile is the city of gold
     public void setAsCityOfGold()
     {
         isCityOfGold = true;
     }
+
+    //Display city when tile is stepped on (if applicable)
     void displayCityOfGold()
     {
-        sr.sprite = SpriteContainer.SC.cityOfGold;
-        //TODO need to adjust the polygon collider to match the new sprite
+        sr.sprite = SpriteContainer.SC.cityOfGold; //TODO need to adjust the polygon collider to match the new sprite ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }   
 
+    //Place unit on tile
     public void addUnit()
     {        
         Unit newUnit = Instantiate(defaultUnit, transform).GetComponent<Unit>();
@@ -163,6 +165,7 @@ public class TileHandler : MonoBehaviour
         newUnit.setTile(this, transform);
     }
 
+    //Place enemy on tile
     public void addEnemy()
     {
         Enemy newEnemy = Instantiate(defaultEnemy, transform).GetComponent<Enemy>();
@@ -171,6 +174,7 @@ public class TileHandler : MonoBehaviour
         newEnemy.setTile(this, transform);
     }
 
+    //Remove unit from tile
     public Unit grabUnit()
     {
         Unit temp = units[unitCount-1];
@@ -179,6 +183,7 @@ public class TileHandler : MonoBehaviour
         return temp;
     }
 
+    //Remove enemy from tile
     public void grabEnemy()
     {
         Enemy temp = enemies[enemyCount - 1];
@@ -187,44 +192,37 @@ public class TileHandler : MonoBehaviour
         Destroy(temp.gameObject);
     }
 
+    //Move unit from one tile to another
     public void transferUnit(Unit u)
     {
-        Debug.Log("transferring unit");
+        Debug.Log("EDITOR NOTE: transferring unit");
         units.Add(u);
         unitCount += 1;
         u.setTile(this, transform);
         if (isCityOfGold)
         {
-            Debug.Log("Congrats, you have found the city of gold!");
+            Debug.Log("PLAYER NEEDS TO SEE: Congrats, you have found the city of gold!");
             displayCityOfGold();
             
             if (unitCount >= PlayerManager.PM.unitsToWin && PlayerManager.PM.stone >= PlayerManager.PM.stoneToWin && PlayerManager.PM.water >= PlayerManager.PM.waterToWin && PlayerManager.PM.wood >= PlayerManager.PM.woodToWin) {
-                //MOVE INTO WIN STATE BELOW, EVENTUALLY
-                Debug.Log("Congrats, you have successfully excavated the city of gold!");                
-                //GameManager.GM.endSceneText.text = "You Won!";
+                Debug.Log("PLAYER NEEDS TO SEE: Congrats, you have successfully excavated the city of gold!");                
                 GameManager.GM.endSceneString = "You Won!";
                 GameManager.GM.ChangeScene();
             }
             else
             {
-                Debug.Log("You need more resources to excavate the city of gold.");
+                Debug.Log("PLAYER NEEDS TO SEE: You need more resources to excavate the city of gold.");
             }
         }
     }
 
+    //Kill a unit
     public void killUnit()
     {
         Unit u = units[unitCount-1];
         units.RemoveAt(unitCount-1);
         unitCount -= 1;
         Destroy(u.gameObject);        
-
-        /*if(unitCount == 0)
-        {
-            //GameManager.GM.endSceneText.text = "GAME OVER.";
-            GameManager.GM.endSceneString = "GAME OVER";
-            GameManager.GM.ChangeScene();
-        }*/
     }
     
     public int numUnits() {
@@ -262,7 +260,6 @@ public class TileHandler : MonoBehaviour
     public void changeSprite(String s)
     {
         Debug.Log("inchangesprite");
-        //sr.sprite = g.GetComponent<Sprite>();
         sr.sprite = AssetDatabase.LoadAssetAtPath<Sprite>(s);
     }
 }

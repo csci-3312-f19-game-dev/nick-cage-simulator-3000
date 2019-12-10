@@ -2,29 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//The purpose of this class is to hold information for an enemy instance.
 public class Enemy : MonoBehaviour
 {
-    string type;
-    //xPos and yPos are already contained by the transform, so I don't think we need these variables
-    float xPos;
-    float yPos;
+    string type; //For use if we expand and create multiple units
     TileHandler tile;
     GameObject thisObject; //weird variable, but needed for removing a unit
-    //attach to sprite?
     SpriteRenderer sr;
 
     void Start()
     {
         type = "theOnlyTypeRn"; //potential to expand
-        xPos = transform.position.x;
-        yPos = transform.position.y;
         sr = GetComponent<SpriteRenderer>();
         sr.sortingOrder = MapGenerator.MG.topLayer() + 1;
     }
 
     void Update()
     {
-        //TODO call to TileHandler new method "try to harvest"
+        //TODO call to TileHandler new method "try to harvest" ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //if successful, TileHandler will add to player stash
         //reload time for resources based on a timer
     }

@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+//The purpose of this class is to move all enemies based on a timer.
 
 public class EnemyMover : MonoBehaviour
 {
@@ -15,13 +16,12 @@ public class EnemyMover : MonoBehaviour
         prevTime0 = Time.time;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         
     }
 
-    // Update is called once per frame
+    //Every x time units, move enemies
     void Update()
     {
         if (currTime - prevTime0 > enemyMoveRate)
@@ -32,6 +32,7 @@ public class EnemyMover : MonoBehaviour
         currTime += Time.deltaTime;
     }
 
+    //Place enemies on new tiles
     public void moveEnemies()
     {
         int h = MapGenerator.height;
@@ -46,13 +47,6 @@ public class EnemyMover : MonoBehaviour
             int xGrid = gridXY.Item1;
             int yGrid = gridXY.Item2;
             int numEnemies = enemies.Count;
-
-            if (numEnemies > 0)
-            {
-                //Debug.Log("(xGrid,yGrid) = (" + xGrid + "," + yGrid + ")");
-                //Debug.Log(numEnemies + " enemies");
-            }
-
 
             for (int i = 0; i < numEnemies; i++)
             {
@@ -94,7 +88,7 @@ public class EnemyMover : MonoBehaviour
                         x = xGrid + 1;
                     }
                 }
-                //Debug.Log("(x,y) = (" + x + "," + y + ")");
+
                 xList.Add(x);
                 yList.Add(y);
             }
@@ -105,10 +99,8 @@ public class EnemyMover : MonoBehaviour
             }                
         }
 
-        //Debug.Log("units placed on:");
         for (int i = 0; i < xList.Count; i++)
         {
-            //Debug.Log("(x,y) = (" + xList[i] + "," + yList[i] + ")");
             foreach (GameObject tile in tiles)
             {
                 Tuple<int, int> tileXY = tile.gameObject.GetComponent<TileHandler>().getGridXY();
@@ -127,7 +119,8 @@ public class EnemyMover : MonoBehaviour
                         {
                             tile.gameObject.GetComponent<TileHandler>().grabEnemy();
                         }
-                    } else
+                    }
+                    else
                     {
                         for (int j = 0; j < numUnits; j++)
                         {

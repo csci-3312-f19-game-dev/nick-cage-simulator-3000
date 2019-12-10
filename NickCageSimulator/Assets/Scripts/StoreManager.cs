@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Threading;
+
+//The purpose of this class is to handle buying and selling
 public class StoreManager : MonoBehaviour
 {
     public static StoreManager SM;
@@ -39,7 +38,6 @@ public class StoreManager : MonoBehaviour
 
     public bool currentlyPlacingBoughtTiles;
 
-    // Start is called before the first frame update
     void Start()
     {
         SM = this;
@@ -66,7 +64,6 @@ public class StoreManager : MonoBehaviour
         updatePriceDisplays();
     }
 
-    // Update is called once per frame
     void Update()
     {
     }
@@ -115,7 +112,8 @@ public class StoreManager : MonoBehaviour
             Time.timeScale = 0;
         }
     }
-
+    
+    //Displays how much each resource costs at this point
     public static int getCurrentExchangePrice(Resource purchasing, Resource currency)
     {
         switch (purchasing)
@@ -125,13 +123,10 @@ public class StoreManager : MonoBehaviour
                 {
                     case Resource.Stone:
                         return StoneToFoodPrice;
-                        break;
                     case Resource.Water:
                         return WaterToFoodPrice;
-                        break;
                     case Resource.Wood:
                         return WoodToFoodPrice;
-                        break;
                     default:
                         break;
                 }
@@ -141,13 +136,10 @@ public class StoreManager : MonoBehaviour
                 {
                     case Resource.Food:
                         return FoodToStonePrice;
-                        break;
                     case Resource.Water:
                         return WaterToStonePrice;
-                        break;
                     case Resource.Wood:
                         return WoodToStonePrice;
-                        break;
                     default:
                         break;
                 }
@@ -157,7 +149,6 @@ public class StoreManager : MonoBehaviour
                 {
                     case Resource.Food:
                         return FoodToUnitsPrice;
-                        break;
                     default:
                         break;
                 }
@@ -167,7 +158,6 @@ public class StoreManager : MonoBehaviour
                 {
                     case Resource.Stone:
                         return StoneToSafetyTilePrice;
-                        break;
                     default:
                         break;
                 }
@@ -177,13 +167,10 @@ public class StoreManager : MonoBehaviour
                 {
                     case Resource.Food:
                         return FoodToWaterPrice;
-                        break;
                     case Resource.Stone:
                         return StoneToWaterPrice;
-                        break;
                     case Resource.Wood:
                         return WoodToWaterPrice;
-                        break;
                     default:
                         break;
                 }
@@ -193,13 +180,10 @@ public class StoreManager : MonoBehaviour
                 {
                     case Resource.Food:
                         return FoodToWoodPrice;
-                        break;
                     case Resource.Water:
                         return WaterToWoodPrice;
-                        break;
                     case Resource.Stone:
                         return StoneToWoodPrice;
-                        break;
                     default:
                         break;
                 }

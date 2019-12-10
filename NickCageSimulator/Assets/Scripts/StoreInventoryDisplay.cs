@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
+//The purpose of this class is to display the player's resource inventory at the bottom of the screen.
 public class StoreInventoryDisplay : MonoBehaviour
 {
     public Text foodDisplay;
@@ -16,7 +15,6 @@ public class StoreInventoryDisplay : MonoBehaviour
         foodDisplay.text = "No food yet.";
     }
 
-    // Update is called once per frame
     void Update()
     {
         foodDisplay.text = ("" + pm.food);
